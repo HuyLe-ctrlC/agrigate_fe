@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:300,400,500,600&display=swap');
+body {
+    font-family: 'Oswald' !important;
+    font-size: 15px;
+    font-weight: 300 !important;
+}
+.swal2-title {
+    padding: 1.5em 1em !important;
+    font-size: 1.5em !important;
+    font-weight: 400 !important;
+}
+.btn-cus {
+    min-width: 100px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10rem;
+}
+/*------------------------------- form style ------------------------------*/
+.form-box {
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 400px;
+    max-width: 100%;
+    background-color: #fff;
+    z-index: 99999;
+    border-left: 1px solid #f5f5f5;
+    overflow-y: auto;
+}
+.form-box .form {
+    padding: 15px;
+    position: relative;
+}
+.form-box .form .btn-close {
+    background-color: transparent;
+    outline: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    font-size: 1.5rem;
+}
+.form-box .form .title {
+    border-bottom: 1px solid #f5f5f5;
+    padding-bottom: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+.form-box .form .box {
+    padding: 10px 10px;
+}
+.form-box .form .box .form-box label {
+    font-weight: 400;
+}
+
+.color-sort {
+    color: #858796;
+    outline: 1px solid #D1D3E2;
+}
+
+.input-outline-none {
+    outline: none;
+}

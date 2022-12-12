@@ -1,0 +1,11 @@
+.hover-sidebar {
+    border-color: #979695;
+    color: #979695;
+    transition: all 0.35s;
+}
+.hover-sidebar:hover {
+    transform: translateY(-0.25em);
+    box-shadow: 0 0 0.5em 0em #5e5e5e;
+    border-color: #5e5e5e;
+    color: #5e5e5e;
+}
