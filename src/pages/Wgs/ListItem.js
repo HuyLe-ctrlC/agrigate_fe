@@ -79,6 +79,7 @@ export const ListItem = ({ data, openFormUpdate }) => {
         if (!!sort) {
             setSort(e.target.value);
             const resultAction = await dispatch(sortAction({ id, sort }));
+            console.log('resultAction', resultAction);
             if (sortAction.fulfilled.match(resultAction)) {
                 // const msg = resultAction.payload;
                 // console.log(msg);
@@ -118,7 +119,8 @@ export const ListItem = ({ data, openFormUpdate }) => {
         <>
             {data?.map((item) => (
                 <tr className="text-center" key={item.id}>
-                    <td>
+                    {/* <td>
+                        {item.id}
                         <input
                             className="text-center border-0 color-sort"
                             id={`sort-${item.id}`}
@@ -126,8 +128,10 @@ export const ListItem = ({ data, openFormUpdate }) => {
                             defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
                             onChange={(e) => handleUpdateSort(e, item.id)}
                         />
-                    </td>
+                    </td> */}
                     <td>{item.name}</td>
+                    <td>{item.name_cow_breeds}</td>
+                    <td>{item.name_weight}</td>
                     <td className="text-center">
                         {format(
                             new Date(
@@ -135,6 +139,16 @@ export const ListItem = ({ data, openFormUpdate }) => {
                             ),
                             'dd/MM/yyyy',
                         )}
+                    </td>
+                    <td>
+                        {/* {item.id} */}
+                        <input
+                            className="text-center border-0 color-sort"
+                            id={`sort-${item.id}`}
+                            type="text"
+                            defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
+                            onChange={(e) => handleUpdateSort(e, item.id)}
+                        />
                     </td>
                     <td className="text-center">
                         <div className="custom-control custom-switch">

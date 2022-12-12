@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { deleteAction, sortAction, statusPublishAction } from '../../redux/slices/weightP0Slices';
+import { deleteAction, sortAction, statusPublishAction } from '../../redux/slices/conditionSlices';
 import { format } from 'date-fns';
 
 export const ListItem = ({ data, openFormUpdate }) => {
@@ -118,8 +118,9 @@ export const ListItem = ({ data, openFormUpdate }) => {
         <>
             {data?.map((item) => (
                 <tr className="text-center" key={item.id}>
-                    {/* <td>
-                        {item.id}
+                    <td>{item.code}</td>
+                    <td>{item.name}</td>
+                    <td>
                         <div>
                             <input
                                 className="text-center border-0 color-sort"
@@ -129,34 +130,6 @@ export const ListItem = ({ data, openFormUpdate }) => {
                                 onChange={(e) => handleUpdateSort(e, item.id)}
                             />
                         </div>
-                    </td> */}
-                    <td>{item.name}</td>
-
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.min_value}
-                            readOnly
-                        />
-                    </td>
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.max_value}
-                            readOnly
-                        />
-                    </td>
-                    <td>
-                        {/* {item.id} */}
-                        <input
-                            className="text-center border-0 color-sort"
-                            id={`sort-${item.id}`}
-                            type="text"
-                            defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
-                            onChange={(e) => handleUpdateSort(e, item.id)}
-                        />
                     </td>
                     <td className="text-center">
                         {format(
@@ -165,6 +138,12 @@ export const ListItem = ({ data, openFormUpdate }) => {
                             ),
                             'dd/MM/yyyy',
                         )}
+                    </td>
+                    <td>
+                        <input type="color" id="color" name="color" value={item.color_text} readonly />
+                    </td>
+                    <td>
+                        <input type="color" id="color" name="color" value={item.color_bg} readonly />
                     </td>
                     <td className="text-center">
                         <div className="custom-control custom-switch">

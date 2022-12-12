@@ -8,7 +8,8 @@ export const Search = (props) => {
     const [weightP0Selected] = useState('');
     // search event
     const handleClickSearch = () => {
-        handleSearch(keySearch + formik.values.cowBreedSelected + +formik.values.weightP0Selected);
+        // handleSearch(keySearch + formik.values.cowBreedSelected + +formik.values.weightP0Selected);
+        handleSearch(keySearch);
     };
 
     //formik

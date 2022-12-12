@@ -26,7 +26,6 @@ export const Form = (props) => {
     const { dataUpdate } = wgsData;
     //useRef
     const inputRef = useRef();
-
     useEffect(() => {
         focus();
         if (isUpdate) {
@@ -141,6 +140,52 @@ export const Form = (props) => {
                             />
                             <div className="text-danger fs-6 mt-1">{formik.touched.name && formik.errors.name}</div>
                         </div>
+                        {/* <div className="form-group col-6">
+                            <label>
+                                cowBreedID<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort rounded-pill"
+                                    value={formik.values.cowBreedID}
+                                    onChange={formik.handleChange('cowBreedID')}
+                                    onBlur={formik.handleBlur('cowBreedID')}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {cowBreedData?.map((item, index) => (
+                                        <option value={item.id} key={item.id}>
+                                            {item.id}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger fs-6 mt-1">
+                                {formik.touched.cowBreedID && formik.errors.cowBreedID}
+                            </div>
+                        </div>
+                        <div className="form-group col-6">
+                            <label>
+                                weightP0ID<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort rounded-pill"
+                                    value={formik.values.weightP0ID}
+                                    onChange={formik.handleChange('weightP0ID')}
+                                    onBlur={formik.handleBlur('weightP0ID')}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {weightP0Data?.map((item, index) => (
+                                        <option value={item.id} key={item.id}>
+                                            {item.id}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger fs-6 mt-1">
+                                {formik.touched.weightP0ID && formik.errors.weightP0ID}
+                            </div>
+                        </div> */}
                         {!isUpdate && (
                             <div>
                                 <div className="form-group">

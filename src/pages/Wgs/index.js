@@ -11,8 +11,8 @@ import { Paging } from '../../components/Paging';
 import { Search } from './Search';
 import Swal from 'sweetalert2';
 
-export const WGS = () => {
-    const title = 'Quản lý WGS';
+export const Wgs = () => {
+    const title = 'Quản lý tăng tăng trọng tiêu chuẩn';
     const dispatch = useDispatch();
     const { formStatus } = useSelector(selectForm);
     const [formStatusState, setFormStatusState] = useState(false);
@@ -196,6 +196,7 @@ export const WGS = () => {
         dispatch(action);
         setIsUpdate(false);
     };
+    // console.log('cowBreedData', cowBreedData);
     // check show form
     const displayForm = () => {
         if (formStatusState) {
@@ -251,9 +252,11 @@ export const WGS = () => {
                         <table className="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th className="text-center w-25">Thứ tự</th>
                                     <th className="text-center">Tên</th>
+                                    <th className="text-center">Giống bò</th>
+                                    <th className="text-center">Cân nặng P0</th>
                                     <th className="text-center">Ngày tạo</th>
+                                    <th className="text-center">Thứ tự</th>
                                     <th className="text-center">Hiển thị</th>
                                     <th className="text-center">Hành động</th>
                                 </tr>

@@ -10,7 +10,7 @@ export const WGE = '/wge';
 export const AWG = '/awg';
 export const WEIGHT = '/weight';
 export const CONFIG = '/config';
-export const WGS = '/WGS';
+export const WGS = '/wgs';
 
 // 404 page
 export const NOT_FOUND = '/not-found';

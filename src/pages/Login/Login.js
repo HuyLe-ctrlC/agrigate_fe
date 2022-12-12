@@ -62,7 +62,7 @@ export const Login = () => {
                                             <form onSubmit={formik.handleSubmit} className="user">
                                                 <div className="form-group mb-3">
                                                     <input
-                                                        type="email"
+                                                        type="text"
                                                         placeholder="Nhập địa chỉ email ..."
                                                         value={formik.values.username}
                                                         onChange={formik.handleChange('username')}

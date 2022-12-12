@@ -87,10 +87,10 @@ export const SideBar = () => {
                         data-parent="#accordionSidebar"
                     >
                         <div className="py-2 collapse-inner rounded ">
-                            <Link className="collapse-item hover-sidebar" to={ROUTES.ROLE}>
+                            <Link className="collapse-item hover-sidebar">
                                 <i className="fa-solid fa-arrow-right"></i> Quản lý nhóm quyền
                             </Link>
-                            <Link className="collapse-item hover-sidebar" to={ROUTES.ADMIN}>
+                            <Link className="collapse-item hover-sidebar">
                                 <i className="fa-solid fa-arrow-right"></i> Quản lý Admin
                             </Link>
                         </div>

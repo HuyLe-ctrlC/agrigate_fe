@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    selectWeightP0,
+    selectCondition,
     getAllAction,
     addDataAction,
     getByIdAction,
     updateDataAction,
-} from '../../redux/slices/weightP0Slices';
+} from '../../redux/slices/conditionSlices';
 import { openForm, closeForm, selectForm } from '../../redux/slices/formSlices';
 import { ListItem } from './ListItem';
 import { Form } from './Form';
@@ -15,8 +15,8 @@ import { Paging } from '../../components/Paging';
 import { Search } from './Search';
 import Swal from 'sweetalert2';
 
-export const Weight = () => {
-    const title = 'Quản lý cân nặng P0';
+export const Config = () => {
+    const title = 'Quản lý Thể trạng';
     const dispatch = useDispatch();
     const { formStatus } = useSelector(selectForm);
     const [formStatusState, setFormStatusState] = useState(false);
@@ -45,8 +45,8 @@ export const Weight = () => {
         getData();
     }, []);
     // select state to store
-    const weightP0Data = useSelector(selectWeightP0);
-    const { data, totalPage, loading, appError, msgSuccess } = weightP0Data;
+    const conditionData = useSelector(selectCondition);
+    const { data, totalPage, loading, appError, serverErr, msgSuccess } = conditionData;
     // console.log(totalPage);
 
     // Refresh page
@@ -220,73 +220,7 @@ export const Weight = () => {
 
     return (
         <>
-            <div className="container-fluid">
-                {displayForm()}
-                <div className="card shadow mb-4">
-                    {/* Page Heading */}
-                    <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-normal text-primary">{title}</h6>
-                    </div>
-                    <div className="card-body">
-                        <div className="top_tools d-flex mb-3">
-                            <Search handleSearch={handleSearch} />
-                            <button onClick={() => handleOpenFormAdd()} className="btn btn-primary btn-icon-split ml-2">
-                                <span className="text">
-                                    <i className="fa-solid fa-plus"></i> Thêm mới
-                                </span>
-                            </button>
-                            <button onClick={() => handleRefreshPage()} className="btn btn-primary btn-icon-split ml-2">
-                                <span className="text">
-                                    <i className="fa-solid fa-rotate"></i>
-                                </span>
-                            </button>
-                        </div>
-                        {/* { showToast() } */}
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th className="text-center">Tên</th>
-                                    <th className="text-center">P0 nhỏ nhất</th>
-                                    <th className="text-center">P0 lớn nhất</th>
-                                    <th className="text-center">Thứ tự</th>
-                                    <th className="text-center">Ngày tạo</th>
-                                    <th className="text-center">Hiển thị</th>
-                                    <th className="text-center">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {loading ? (
-                                    <tr>
-                                        <td colSpan={7} className="text-center">
-                                            Đang tải dữ liệu...
-                                        </td>
-                                    </tr>
-                                ) : data && data.length <= 0 ? (
-                                    <tr>
-                                        <td colSpan={7} className="text-center">
-                                            Dữ liệu hiện tại chưa được cập nhật
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    <ListItem data={data} openFormUpdate={(id) => handleOpenFormUpdate(id)} />
-                                )}
-                            </tbody>
-                        </table>
-                        {/* paging */}
-                        {totalPage > 1 ? (
-                            <Paging
-                                totalPage={totalPage}
-                                onchangePage={handleChangePage}
-                                onPrevClickPage={handlePrevClick}
-                                onNextClickPage={handleNextClick}
-                                currentPage={currentPage}
-                            />
-                        ) : (
-                            ''
-                        )}
-                    </div>
-                </div>
-            </div>
+            <h1>config</h1>
         </>
     );
 };

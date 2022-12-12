@@ -8,7 +8,7 @@ export const getAllAction = createAsyncThunk(
         try {
             // call Api
             const response = await weightP0Api.getAll(params);
-            // console.log(response);
+            // console.log('asdasdasdas', response);
             if (response.result) {
                 const results = {
                     data: response.data,
@@ -48,31 +48,28 @@ export const getByIdAction = createAsyncThunk(
 );
 
 //create data
-export const addDataAction = createAsyncThunk(
-    'weightP0/add',
-    async (data, { rejectWithValue, getState, dispatch }) => {
-        try {
-            // call Api
-            const response = await weightP0Api.add(data);
-            if (response.result) {
-                const newData = response.data[0].newData;
-                const results = {
-                    data: newData,
-                    msg: response.data[0].msg,
-                };
-                return results;
-            } else {
-                return rejectWithValue(response.errors[0].msg);
-            }
-        } catch (error) {
-            // console.log("Failed to fetch data list: ", error);
-            if (!error.response) {
-                throw error;
-            }
-            return rejectWithValue(error?.response?.data);
+export const addDataAction = createAsyncThunk('weightP0/add', async (data, { rejectWithValue, getState, dispatch }) => {
+    try {
+        // call Api
+        const response = await weightP0Api.add(data);
+        if (response.result) {
+            const newData = response.data[0].newData;
+            const results = {
+                data: newData,
+                msg: response.data[0].msg,
+            };
+            return results;
+        } else {
+            return rejectWithValue(response.errors[0].msg);
         }
-    },
-);
+    } catch (error) {
+        // console.log("Failed to fetch data list: ", error);
+        if (!error.response) {
+            throw error;
+        }
+        return rejectWithValue(error?.response?.data);
+    }
+});
 
 //update data by ID
 export const updateDataAction = createAsyncThunk(
@@ -167,26 +164,23 @@ export const sortAction = createAsyncThunk(
 );
 
 //delete data by id
-export const deleteAction = createAsyncThunk(
-    'weightP0/delete',
-    async (id, { rejectWithValue, getState, dispatch }) => {
-        try {
-            // call api
-            const response = await weightP0Api.delete(id);
-            if (response.result) {
-                return id;
-            } else {
-                return rejectWithValue(response.errors[0].msg);
-            }
-        } catch (error) {
-            // console.log('Failed to fetch data list: ', error);
-            if (!error.response) {
-                throw error;
-            }
-            return rejectWithValue(error?.response?.data);
+export const deleteAction = createAsyncThunk('weightP0/delete', async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+        // call api
+        const response = await weightP0Api.delete(id);
+        if (response.result) {
+            return id;
+        } else {
+            return rejectWithValue(response.errors[0].msg);
         }
-    },
-);
+    } catch (error) {
+        // console.log('Failed to fetch data list: ', error);
+        if (!error.response) {
+            throw error;
+        }
+        return rejectWithValue(error?.response?.data);
+    }
+});
 
 // init
 const weightP0Slices = createSlice({

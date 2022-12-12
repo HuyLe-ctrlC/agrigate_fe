@@ -12,12 +12,13 @@ import { CowGroups } from './pages/CowGroups';
 import { Condition } from './pages/Condition';
 import { Wge } from './pages/Wge';
 // account & role
-import { Role } from './pages/Role';
+// import { Role } from './pages/Role';
 import { Awg } from './pages/Awg';
-import { Admin } from './pages/Admin';
+// import { Admin } from './pages/Admin';
 import { Password } from './pages/Password';
 import { Weight } from './pages/Weight';
-import { WGS } from './pages/Wgs';
+import { Wgs } from './pages/Wgs';
+import { Config } from './pages/Config';
 
 function App() {
     return (
@@ -34,10 +35,12 @@ function App() {
                             <Route path={ROUTES.CONDITION} element={<Condition />} />
                             <Route path={ROUTES.WGE} element={<Wge />} />
                             <Route path={ROUTES.WEIGHT} element={<Weight />} />
-                            <Route path={ROUTES.WGS} element={<WGS />} />
+                            <Route path={ROUTES.WGS} element={<Wgs />} />
+                            <Route path={ROUTES.CONFIG} element={<Config />} />
 
                             {/* account & role */}
                             <Route path={ROUTES.AWG} element={<Awg />} />
+                            {/* <Route path={ROUTES.ROLE} element={<Role />} /> */}
                         </Route>
                     </Route>
                     <Route path="*" element={<NotFound />} />
