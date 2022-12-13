@@ -18,17 +18,20 @@ export const Wgs = () => {
     const [formStatusState, setFormStatusState] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [publish, setPublish] = useState('');
+    const [limit, setLimit] = useState(10);
+    const [keyword, setKeyword] = useState('');
     // config general
     let start = currentPage - 1;
-    let limit = 10;
     let orderBy = 'desc';
-    let keyword = '';
+    // let limit = 10;
+    // let keyword = '';
     const params = {
         start: start,
         limit: limit,
         keyword: keyword,
         orderBy: orderBy,
+        publish: publish,
     };
     // get all data
     const getData = () => {
@@ -79,8 +82,13 @@ export const Wgs = () => {
     };
     // ==== paging END ==== //
     // search data
-    const handleSearch = (keyword) => {
+    const handleSearch = (keyword, publish) => {
         params.keyword = keyword;
+        params.publish = publish;
+        setPublish(publish);
+        setKeyword(keyword);
+        setCurrentPage(1);
+        params.start = 0;
         getData();
     };
 

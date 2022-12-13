@@ -56,7 +56,8 @@ body {
 
 .color-sort {
     color: #858796;
-    outline: 1px solid #D1D3E2;
+    outline: 1px solid #d1d3e2;
+    font-weight: 300;
 }
 
 .input-outline-none {

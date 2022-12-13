@@ -1,15 +1,18 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
+import { publishType } from '../../constants/publish/publishConstant';
 
 export const Search = (props) => {
     const [keySearch, setKeySearch] = useState('');
     const { handleSearch, dataCowBreed, dataWeightP0 } = props;
     const [cowBreedSelected] = useState('');
     const [weightP0Selected] = useState('');
+    const [publishSelected] = useState('');
+
     // search event
     const handleClickSearch = () => {
         // handleSearch(keySearch + formik.values.cowBreedSelected + +formik.values.weightP0Selected);
-        handleSearch(keySearch);
+        handleSearch(keySearch.trim(), formik.values.publishSelected);
     };
 
     //formik
@@ -23,34 +26,19 @@ export const Search = (props) => {
 
     return (
         <div className="d-flex">
-            {/* <select
+            <select
                 className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
-                // defaultValue={selectedCity}
-                value={formik.values.cowBreedSelected}
-                onChange={formik.handleChange('cowBreedSelected')}
-                onBlur={formik.handleBlur('cowBreedSelected')}
+                value={formik.values.publishSelected}
+                onChange={formik.handleChange('publishSelected')}
+                onBlur={formik.handleBlur('publishSelected')}
             >
-                <option value="">-- Chọn giống bò---</option>
-                {dataCowBreed?.map((item, index) => (
-                    <option value={item.id} key={index}>
-                        {item.name}
+                <option value="">-- Chọn trạng thái--</option>
+                {publishType?.map((item, index) => (
+                    <option value={item.value} key={index}>
+                        {item.label}
                     </option>
                 ))}
             </select>
-            <select
-                className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
-                // defaultValue={selectedCity}
-                value={formik.values.weightP0Selected}
-                onChange={formik.handleChange('weightP0Selected')}
-                onBlur={formik.handleBlur('weightP0Selected')}
-            >
-                <option value="">-- Chọn -</option>
-                {dataWeightP0?.map((item, index) => (
-                    <option value={item.id} key={index}>
-                        {item.name}
-                    </option>
-                ))}
-            </select> */}
             <div className="input-group">
                 <input
                     type="text"

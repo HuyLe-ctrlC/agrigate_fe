@@ -118,36 +118,9 @@ export const ListItem = ({ data, openFormUpdate }) => {
         <>
             {data?.map((item) => (
                 <tr className="text-center" key={item.id}>
-                    {/* <td>
-                        {item.id}
-                        <div>
-                            <input
-                                className="text-center border-0 color-sort"
-                                id={`sort-${item.id}`}
-                                type="text"
-                                defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
-                                onChange={(e) => handleUpdateSort(e, item.id)}
-                            />
-                        </div>
-                    </td> */}
                     <td>{item.name}</td>
-
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.min_value}
-                            readOnly
-                        />
-                    </td>
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.max_value}
-                            readOnly
-                        />
-                    </td>
+                    <td>{item.min_value}</td>
+                    <td>{item.min_value}</td>
                     <td>
                         {/* {item.id} */}
                         <input
