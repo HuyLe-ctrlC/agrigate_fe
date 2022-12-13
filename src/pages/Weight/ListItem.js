@@ -119,8 +119,9 @@ export const ListItem = ({ data, openFormUpdate }) => {
             {data?.map((item) => (
                 <tr className="text-center" key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.min_value}</td>
-                    <td>{item.min_value}</td>
+
+                    <td>{new Intl.NumberFormat('de-DE').format(item.min_value)}</td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.max_value)}</td>
                     <td>
                         {/* {item.id} */}
                         <input

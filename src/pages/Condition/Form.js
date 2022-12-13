@@ -156,36 +156,39 @@ export const Form = (props) => {
                             />
                             <div className="text-danger fs-6 mt-1">{formik.touched.name && formik.errors.name}</div>
                         </div>
-                        <div className="form-group">
-                            <div className="d-flex flex-column">
-                                <label>Màu chữ</label>
-                                <input
-                                    type="color"
-                                    name="name"
-                                    className="w-100"
-                                    value={formik.values.colorText}
-                                    onChange={formik.handleChange('colorText')}
-                                    onBlur={formik.handleBlur('colorText')}
-                                />
+                        <div className="form-row">
+                            {' '}
+                            <div className="form-group col-6">
+                                <div className="d-flex flex-column">
+                                    <label>Màu chữ</label>
+                                    <input
+                                        type="color"
+                                        name="name"
+                                        className="w-100"
+                                        value={formik.values.colorText}
+                                        onChange={formik.handleChange('colorText')}
+                                        onBlur={formik.handleBlur('colorText')}
+                                    />
+                                </div>
+                                <div className="text-danger fs-6 mt-1">
+                                    {formik.touched.colorText && formik.errors.colorText}
+                                </div>
                             </div>
-                            <div className="text-danger fs-6 mt-1">
-                                {formik.touched.colorText && formik.errors.colorText}
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="d-flex flex-column">
-                                <label>Màu nền</label>
-                                <input
-                                    type="color"
-                                    name="name"
-                                    className="w-100"
-                                    value={formik.values.colorBackground}
-                                    onChange={formik.handleChange('colorBackground')}
-                                    onBlur={formik.handleBlur('colorBackground')}
-                                />
-                            </div>
-                            <div className="text-danger fs-6 mt-1">
-                                {formik.touched.colorBackground && formik.errors.colorBackground}
+                            <div className="form-group col-6">
+                                <div className="d-flex flex-column">
+                                    <label>Màu nền</label>
+                                    <input
+                                        type="color"
+                                        name="name"
+                                        className="w-100"
+                                        value={formik.values.colorBackground}
+                                        onChange={formik.handleChange('colorBackground')}
+                                        onBlur={formik.handleBlur('colorBackground')}
+                                    />
+                                </div>
+                                <div className="text-danger fs-6 mt-1">
+                                    {formik.touched.colorBackground && formik.errors.colorBackground}
+                                </div>
                             </div>
                         </div>
                         <div className="form-group">

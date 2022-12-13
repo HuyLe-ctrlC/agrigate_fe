@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { NotFound } from './pages/NotFound/NotFound';
 import { Home } from './pages/Home/Home';
@@ -21,6 +21,15 @@ import { Wgs } from './pages/Wgs';
 import { Config } from './pages/Config';
 
 function App() {
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = '/assets/js/sb-admin-2.min.js';
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
     return (
         <div className="App vh-100">
             <Router>
