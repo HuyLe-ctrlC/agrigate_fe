@@ -84,7 +84,7 @@ export const updateDataAction = createAsyncThunk(
         try {
             // call Api
             const response = await conditionApi.update(id, data);
-            // console.log(response);
+            console.log(response);
             if (response.result) {
                 const newData = response.data[0].newData;
                 const results = {
@@ -247,7 +247,7 @@ const conditionSlices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 state.loading = false;
                 // add new data into store
-                state.data = state.data.concat(action?.payload.data);
+                state.data = [action?.payload?.data].concat(state.data);
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

@@ -248,7 +248,7 @@ const cowGroupsSlices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 state.loading = false;
                 // add new data into store
-                state.data = state.data.concat(action?.payload.data);
+                state.data = [action?.payload?.data].concat(state.data);
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;
