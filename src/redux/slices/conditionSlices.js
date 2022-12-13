@@ -221,31 +221,31 @@ const conditionSlices = createSlice({
         //get data by ID
         builder
             .addCase(getByIdAction.pending, (state, action) => {
-                state.loading = true;
+                // state.loading = true;
                 state.appError = undefined;
                 state.serverError = undefined;
             })
             .addCase(getByIdAction.fulfilled, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 state.dataUpdate = action?.payload;
                 state.appError = undefined;
                 state.serverError = undefined;
             })
             .addCase(getByIdAction.rejected, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 state.appError = action?.payload?.message;
                 state.serverError = action?.error?.message;
             });
         //add data
         builder
             .addCase(addDataAction.pending, (state, action) => {
-                state.loading = true;
+                // state.loading = true;
                 state.msgSuccess = undefined;
                 state.appError = undefined;
                 state.serverError = undefined;
             })
             .addCase(addDataAction.fulfilled, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 // add new data into store
                 state.data = state.data.concat(action?.payload.data);
                 state.msgSuccess = action?.payload?.msg;
@@ -253,7 +253,7 @@ const conditionSlices = createSlice({
                 state.serverError = undefined;
             })
             .addCase(addDataAction.rejected, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 state.msgSuccess = undefined;
                 state.appError = action?.payload;
                 state.serverError = action?.error?.message;
@@ -261,13 +261,13 @@ const conditionSlices = createSlice({
         //update data
         builder
             .addCase(updateDataAction.pending, (state, action) => {
-                state.loading = true;
+                // state.loading = true;
                 state.msgSuccess = undefined;
                 state.appError = undefined;
                 state.serverError = undefined;
             })
             .addCase(updateDataAction.fulfilled, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 // find and update row data in store
                 const checkIndex = state.data.findIndex((row) => row.id.toString() === action?.payload?.id.toString());
                 if (checkIndex >= 0) {
@@ -278,7 +278,7 @@ const conditionSlices = createSlice({
                 state.serverError = undefined;
             })
             .addCase(updateDataAction.rejected, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 state.msgSuccess = undefined;
                 state.appError = action?.payload;
                 state.serverError = action?.error?.message;
@@ -286,17 +286,17 @@ const conditionSlices = createSlice({
         //delete data by id
         builder
             .addCase(deleteAction.pending, (state, action) => {
-                state.loading = true;
+                // state.loading = true;
             })
             .addCase(deleteAction.fulfilled, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 // delete row data in store
                 state.data = state.data.filter((arrow) => arrow.id !== action.payload);
                 state.appError = undefined;
                 state.serverError = undefined;
             })
             .addCase(deleteAction.rejected, (state, action) => {
-                state.loading = false;
+                // state.loading = false;
                 state.appError = action?.payload;
                 state.serverError = action?.error?.message;
             });

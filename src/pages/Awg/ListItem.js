@@ -165,7 +165,7 @@ export const ListItem = ({ data, openFormUpdate }) => {
                                 type="checkbox"
                                 className="custom-control-input"
                                 id={`publish_${item.id}`}
-                                defaultChecked={item.publish}
+                                checked={item.publish}
                                 onChange={(e) => handleStatus(e, item.id)}
                             />
                             <label className="custom-control-label" htmlFor={`publish_${item.id}`}></label>
