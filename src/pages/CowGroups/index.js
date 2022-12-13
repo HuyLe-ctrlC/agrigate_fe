@@ -100,7 +100,7 @@ export const CowGroups = () => {
 
         const action = await dispatch(addDataAction(dataJson));
         if (addDataAction.fulfilled.match(action)) {
-            // const msg = resultAction.payload;
+            const msg = action.payload.msg;
             // console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
@@ -113,7 +113,7 @@ export const CowGroups = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg,
             });
         } else {
             // console.log(resultAction.payload);
@@ -147,8 +147,7 @@ export const CowGroups = () => {
         // console.log(datas);
         const updateAction = await dispatch(updateDataAction(datas));
         if (updateDataAction.fulfilled.match(updateAction)) {
-            // const msg = resultAction.payload;
-            // console.log(msg);
+            const msg = updateAction.payload.msg;
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',
@@ -160,10 +159,10 @@ export const CowGroups = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg,
             });
         } else {
-            // console.log(resultAction.payload);
+            // console.log(updateAction.payload);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',

@@ -132,22 +132,8 @@ export const ListItem = ({ data, openFormUpdate }) => {
                     </td> */}
                     <td>{item.name}</td>
 
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.min_value}
-                            readOnly
-                        />
-                    </td>
-                    <td>
-                        <input
-                            className="text-center border-0 color-sort input-outline-none"
-                            type="text"
-                            value={item.max_value}
-                            readOnly
-                        />
-                    </td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.min_value)}</td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.max_value)}</td>
                     <td>
                         {/* {item.id} */}
                         <input

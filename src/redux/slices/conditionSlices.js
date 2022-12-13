@@ -54,6 +54,7 @@ export const addDataAction = createAsyncThunk(
         try {
             // call Api
             const response = await conditionApi.add(data);
+
             if (response.result) {
                 const newData = response.data[0].newData;
                 const results = {
@@ -83,6 +84,7 @@ export const updateDataAction = createAsyncThunk(
         try {
             // call Api
             const response = await conditionApi.update(id, data);
+            // console.log(response);
             if (response.result) {
                 const newData = response.data[0].newData;
                 const results = {

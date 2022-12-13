@@ -93,8 +93,8 @@ export const Awg = () => {
         // dispatch(action);
         const action = await dispatch(addDataAction(dataJson));
         if (addDataAction.fulfilled.match(action)) {
-            // const msg = action.payload;
-            // console.log(msg);
+            const msg = action.payload.msg;
+            // console.log('s', msg);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',
@@ -106,7 +106,7 @@ export const Awg = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg,
             });
         } else {
             const msg = action.payload;
@@ -138,7 +138,7 @@ export const Awg = () => {
         // console.log(dataJson);
         const updateAction = await dispatch(updateDataAction(datas));
         if (updateDataAction.fulfilled.match(updateAction)) {
-            // const msg = resultAction.payload;
+            const msg = updateAction.payload.msg;
             // console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
@@ -151,7 +151,7 @@ export const Awg = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg,
             });
         } else {
             // console.log(resultAction.payload);

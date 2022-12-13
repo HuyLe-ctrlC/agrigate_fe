@@ -100,7 +100,7 @@ export const CowBreeds = () => {
 
         const action = await dispatch(addDataAction(dataJson));
         if (addDataAction.fulfilled.match(action)) {
-            // const msg = action.payload;
+            const msg = action.payload.msg;
             // console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
@@ -113,7 +113,7 @@ export const CowBreeds = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg,
             });
         } else {
             // console.log(resultAction.payload);

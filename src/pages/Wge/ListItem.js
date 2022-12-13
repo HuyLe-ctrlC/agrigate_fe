@@ -139,8 +139,10 @@ export const ListItem = ({ data, openFormUpdate }) => {
                             'dd/MM/yyyy',
                         )}
                     </td>
-                    <td>{item.min_value}</td>
-                    <td>{item.max_value}</td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.min_value)}</td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.max_value)}</td>
+                    {/* <td>{item.min_value}</td>
+                    <td>{item.max_value}</td> */}
                     <td className="text-center">
                         <div className="custom-control custom-switch">
                             <input

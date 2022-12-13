@@ -68,47 +68,7 @@ export const SideBar = () => {
                         </div>
                     </div>
                 </li>
-                <li className="nav-item">
-                    <a
-                        className="nav-link collapsed"
-                        href="#"
-                        data-toggle="collapse"
-                        data-target="#accountRole"
-                        aria-expanded="true"
-                        aria-controls="accountRole"
-                    >
-                        <i className="fa-solid fa-user-shield"></i>
-                        <span>Quản trị & phân quyền</span>
-                    </a>
-                    <div
-                        id="accountRole"
-                        className="collapse"
-                        aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar"
-                    >
-                        <div className="py-2 collapse-inner rounded ">
-                            <Link className="collapse-item hover-sidebar">
-                                <i className="fa-solid fa-arrow-right"></i> Quản lý nhóm quyền
-                            </Link>
-                            <Link className="collapse-item hover-sidebar">
-                                <i className="fa-solid fa-arrow-right"></i> Quản lý Admin
-                            </Link>
-                        </div>
-                    </div>
-                </li>
-                {/* <li className="nav-item">
-          <Link className="nav-link" to={ROUTES.APPLY}>
-            <i className="fas fa-fw fa-chart-area" />
-            <span>Ứng tuyển</span>
-          </Link>
-        </li> */}
-                {/* Nav Item - Tables */}
-                {/* <li className="nav-item">
-          <Link className="nav-link" to={ROUTES.CANDIDATE}>
-            <i className="fas fa-fw fa-table" />
-            <span>Quản lý ứng viên</span>
-          </Link>
-        </li> */}
+
                 <hr className="sidebar-divider d-none d-md-block" />
                 {/* Sidebar Toggler (Sidebar) */}
                 <div className="text-center d-none d-md-inline">

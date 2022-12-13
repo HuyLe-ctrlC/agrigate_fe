@@ -3,11 +3,15 @@ import { useSelector } from 'react-redux';
 import { selectWeightP0 } from '../../redux/slices/weightP0Slices';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
+import { NumericFormat } from 'react-number-format';
 const formSchema = Yup.object({
     name: Yup.string().required('*Dữ liệu bắt buộc!'),
-    minValue: Yup.number().required('*Dữ liệu bắt buộc!').min(0).positive('Phải lớn hơn 0').typeError('Dữ liệu là số!'),
-    maxValue: Yup.number().required('*Dữ liệu bắt buộc!').min(0).positive('Phải lớn hơn 0').typeError('Dữ liệu là số!'),
+    minValue: Yup.string()
+        .required('*Dữ liệu bắt buộc!')
+        .test('Is positive?', 'Giá trị phải lớn hơn 0!', (value) => parseInt(value) > 0),
+    maxValue: Yup.string()
+        .required('*Dữ liệu bắt buộc!')
+        .test('Is positive?', 'Giá trị phải lớn hơn 0!', (value) => parseInt(value) > 0),
 });
 
 export const Form = (props) => {
@@ -53,8 +57,14 @@ export const Form = (props) => {
         let dataUpdateNew = {
             name: formik.values.name,
             publish: publish,
-            min_value: formik.values.minValue,
-            max_value: formik.values.maxValue,
+            min_value:
+                typeof formik.values.minValue == 'string'
+                    ? formik.values.minValue.replace(/,/g, '')
+                    : formik.values.minValue,
+            max_value:
+                typeof formik.values.maxValue == 'string'
+                    ? formik.values.maxValue.replace(/,/g, '')
+                    : formik.values.maxValue,
         };
         // console.log("dataUpdateNew", dataUpdateNew);
         updateDate(id, dataUpdateNew);
@@ -65,8 +75,14 @@ export const Form = (props) => {
         let data = {
             name: formik.values.name,
             publish: publish,
-            min_value: formik.values.minValue,
-            max_value: formik.values.maxValue,
+            min_value:
+                typeof formik.values.minValue == 'string'
+                    ? formik.values.minValue.replace(/,/g, '')
+                    : formik.values.minValue,
+            max_value:
+                typeof formik.values.maxValue == 'string'
+                    ? formik.values.maxValue.replace(/,/g, '')
+                    : formik.values.maxValue,
         };
         addData(data);
     };
@@ -136,13 +152,15 @@ export const Form = (props) => {
                         <div className="form-group">
                             <div className="d-flex flex-column">
                                 <label>P0 nhỏ nhất</label>
-                                <input
-                                    type="number"
+                                <NumericFormat
+                                    type="text"
+                                    className="form-control form-control-user"
                                     name="minValue"
-                                    className="form-control w-100 color-sort rounded-pill"
                                     value={formik.values.minValue}
                                     onChange={formik.handleChange('minValue')}
                                     onBlur={formik.handleBlur('minValue')}
+                                    thousandsGroupStyle="thousand"
+                                    thousandSeparator=","
                                 />
                             </div>
                             <div className="text-danger fs-6 mt-1">
@@ -152,13 +170,15 @@ export const Form = (props) => {
                         <div className="form-group">
                             <div className="d-flex flex-column">
                                 <label>P0 lớn nhất</label>
-                                <input
-                                    type="number"
+                                <NumericFormat
+                                    type="text"
+                                    className="form-control form-control-user"
                                     name="maxValue"
-                                    className="form-control w-100 color-sort rounded-pill"
                                     value={formik.values.maxValue}
                                     onChange={formik.handleChange('maxValue')}
                                     onBlur={formik.handleBlur('maxValue')}
+                                    thousandsGroupStyle="thousand"
+                                    thousandSeparator=","
                                 />
                             </div>
                             <div className="text-danger fs-6 mt-1">
