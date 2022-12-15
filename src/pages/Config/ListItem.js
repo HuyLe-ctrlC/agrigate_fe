@@ -140,10 +140,10 @@ export const ListItem = ({ data, openFormUpdate }) => {
                         )}
                     </td>
                     <td>
-                        <input type="color" id="color" name="color" value={item.color_text} readonly />
+                        <input type="color" id="color" name="color" value={item.color_text} readOnly />
                     </td>
                     <td>
-                        <input type="color" id="color" name="color" value={item.color_bg} readonly />
+                        <input type="color" id="color" name="color" value={item.color_bg} readOnly />
                     </td>
                     <td className="text-center">
                         <div className="custom-control custom-switch">

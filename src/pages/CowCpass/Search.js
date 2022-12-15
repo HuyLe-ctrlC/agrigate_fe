@@ -4,7 +4,7 @@ import { publishType } from '../../constants/publish/publishConstant';
 
 export const Search = (props) => {
     const [keySearch, setKeySearch] = useState('');
-    const { handleSearch } = props;
+    const { handleSearch, dataCowGroups, dataCowBreeds, dataFarm, dataConditions } = props;
     const [publishSelected] = useState('');
     const [cowGroup, setCowGroup] = useState('');
     const [conditions, setConditions] = useState('');
@@ -33,56 +33,49 @@ export const Search = (props) => {
                 className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
                 // defaultValue={selectedCity}
                 value={formik.values.farm}
+                onChange={formik.handleChange('farm')}
 
                 // onBlur={formik.handleBlur('farm')}
             >
                 <option value="">-- Chọn trang trại--</option>
-                {publishType?.map((item, index) => (
-                    <option value={item.value} key={index}>
-                        {item.label}
-                    </option>
+                {dataFarm?.map((item, index) => (
+                    <option key={item.id}>{item.name}</option>
                 ))}
             </select>
             <select
                 className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
                 // defaultValue={selectedCity}
                 value={formik.values.cowGroup}
-                // onChange={formik.handleChange('publishSelected')}
+                onChange={formik.handleChange('cowGroup')}
                 // onBlur={formik.handleBlur('publishSelected')}
             >
                 <option value="">-- Chọn nhóm bò--</option>
-                {publishType?.map((item, index) => (
-                    <option value={item.value} key={index}>
-                        {item.label}
-                    </option>
+                {dataCowGroups?.map((item, index) => (
+                    <option key={item.id}>{item.name}</option>
                 ))}
             </select>{' '}
             <select
                 className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
                 // defaultValue={selectedCity}
                 value={formik.values.cowBreeds}
-                // onChange={formik.handleChange('publishSelected')}
+                onChange={formik.handleChange('cowBreeds')}
                 // onBlur={formik.handleBlur('publishSelected')}
             >
                 <option value="">-- Chọn giống bò--</option>
-                {publishType?.map((item, index) => (
-                    <option value={item.value} key={index}>
-                        {item.label}
-                    </option>
+                {dataCowBreeds?.map((item, index) => (
+                    <option key={item.id}>{item.name}</option>
                 ))}
             </select>{' '}
             <select
                 className="form-select form-control w-50 border-0 p-n5 rounded color-sort mr-2 "
                 // defaultValue={selectedCity}
                 value={formik.values.conditions}
-                // onChange={formik.handleChange('publishSelected')}
+                onChange={formik.handleChange('conditions')}
                 // onBlur={formik.handleBlur('publishSelected')}
             >
                 <option value="">-- Chọn thể trạng--</option>
-                {publishType?.map((item, index) => (
-                    <option value={item.value} key={index}>
-                        {item.label}
-                    </option>
+                {dataConditions?.map((item, index) => (
+                    <option key={item.id}>{item.name}</option>
                 ))}
             </select>{' '}
             <div className="input-group w-75">

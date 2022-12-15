@@ -4,3 +4,4 @@ const PATH = {
     cowBreeds: '/cow-breeds/getall',
     conditions: '/conditions/getall',
 };
+export default PATH;

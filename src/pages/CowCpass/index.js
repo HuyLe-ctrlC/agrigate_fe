@@ -16,6 +16,7 @@ import { Search } from './Search';
 import Swal from 'sweetalert2';
 import { async } from 'q';
 import axiosClient from '../../api/axiosClient';
+import PATH from '../../constants/path';
 // import { selectCowBreeds } from "../../redux/slices/cowBreedsSlice";
 
 export const CowCpass = () => {
@@ -28,6 +29,12 @@ export const CowCpass = () => {
     const [publish, setPublish] = useState('');
     const [limit, setLimit] = useState(10);
     const [keyword, setKeyword] = useState('');
+    const [cowGroup, setCowGroup] = useState([]);
+    const [conditions, setConditions] = useState([]);
+    // const [wge, setWge] = useState('');
+    // const [awg, setAwg] = useState('');
+    const [cowBreeds, setCowBreeds] = useState([]);
+    const [farm, setFarm] = useState([]);
     // config general
     let start = currentPage - 1;
     let orderBy = 'desc';
@@ -47,11 +54,93 @@ export const CowCpass = () => {
         dispatch(getAllAction(params));
     };
     const getDataFarm = async () => {
-        const res = await axiosClient({ method: 'GET', url: '' });
+        try {
+            const res = await axiosClient({ method: 'GET', url: PATH.farms });
+            console.log(res);
+            setFarm(res.data);
+        } catch (error) {
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: error,
+            });
+        }
     };
-    const getDataCowGroup = () => {};
-    const getDataCowBreeds = () => {};
-    const getDataConditions = () => {};
+    const getDataCowGroup = async () => {
+        try {
+            const res = await axiosClient({ method: 'GET', url: PATH.cowGroups });
+            console.log(res);
+            setCowGroup(res.data);
+        } catch (error) {
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: error,
+            });
+        }
+    };
+    const getDataCowBreeds = async () => {
+        try {
+            const res = await axiosClient({ method: 'GET', url: PATH.cowBreeds });
+            console.log(res);
+            setCowBreeds(res.data);
+        } catch (error) {
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: error,
+            });
+        }
+    };
+    const getDataConditions = async () => {
+        try {
+            const res = await axiosClient({ method: 'GET', url: PATH.conditions });
+            console.log(res);
+            setConditions(res.data);
+        } catch (error) {
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: error,
+            });
+        }
+    };
 
     useEffect(() => {
         getData();
@@ -250,7 +339,13 @@ export const CowCpass = () => {
                     </div>
                     <div className="card-body">
                         <div className="top_tools d-flex mb-3">
-                            <Search handleSearch={handleSearch} />
+                            <Search
+                                handleSearch={handleSearch}
+                                dataCowGroups={cowGroup}
+                                dataCowBreeds={cowBreeds}
+                                dataFarm={farm}
+                                dataConditions={conditions}
+                            />
                             <button onClick={() => handleOpenFormAdd()} className="btn btn-primary btn-icon-split ml-2">
                                 <span className="text">
                                     <i className="fa-solid fa-plus"></i> Thêm mới
