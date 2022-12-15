@@ -5,4 +5,6 @@ export const constantStatus = {
     NOT_COMPLETE: 'Chưa thanh toán',
     ONPUBLISH: 'Kích hoạt',
     OFFPUBLISH: 'Vô hiệu hóa',
+    MALE: 'Đực',
+    FEMALE: 'Cái',
 };
