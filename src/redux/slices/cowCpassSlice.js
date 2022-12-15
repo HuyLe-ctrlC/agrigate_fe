@@ -52,7 +52,7 @@ export const addDataAction = createAsyncThunk('cowCpass/add', async (data, { rej
     try {
         // call Api
         const response = await cowCpassApi.add(data);
-        // console.log(response);
+        console.log('response', response);
         if (response.result) {
             const newData = response.data[0].newData;
             const results = {

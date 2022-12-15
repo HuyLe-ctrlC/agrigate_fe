@@ -5,8 +5,8 @@ import { useFormik } from 'formik';
 import { selectCowBreeds } from '../../redux/slices/cowBreedsSlice';
 import { genderCow } from '../../constants/publish/publishConstant';
 const formSchema = Yup.object({
-    name: Yup.string().required('*Dữ liệu bắt buộc!'),
-    code: Yup.string().required('*Dữ liệu bắt buộc!'),
+    // name: Yup.string().required('*Dữ liệu bắt buộc!'),
+    // code: Yup.string().required('*Dữ liệu bắt buộc!'),
 });
 
 export const Form = (props) => {
@@ -98,15 +98,13 @@ export const Form = (props) => {
     //update image
     const [imgData, setImgData] = useState(null);
     const onChangePicture = (e) => {
-        if (e.target.files[0]) {
-            // setImageDefault(false);
-            setFiles(e.target.files[0]);
-            const reader = new FileReader();
-            reader.onload = async function () {
-                setImgData(reader.result);
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
+        // setImageDefault(false);
+        setFiles(e.target.files);
+        const reader = new FileReader();
+        reader.onload = async function () {
+            setImgData(reader.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
     };
     // update data event
     const handleUpdateData = () => {
@@ -126,7 +124,6 @@ export const Form = (props) => {
         formData.append('conditions_ID', formik.values.conditionID);
         formData.append('wge_ID', formik.values.wgeID);
         formData.append('awg_ID', formik.values.awgID);
-        formData.append('userID', formik.values.userID);
 
         for (let i = 0; i < files.length; i++) {
             formData.append('image', files[i]);
@@ -154,13 +151,12 @@ export const Form = (props) => {
         formData.append('conditions_ID', formik.values.conditionID);
         formData.append('wge_ID', formik.values.wgeID);
         formData.append('awg_ID', formik.values.awgID);
-        formData.append('userID', formik.values.userID);
 
         for (let i = 0; i < files.length; i++) {
             formData.append('image', files[i]);
         }
         for (let value1 of formData) {
-            // console.log(value1[0], value1[1]);
+            console.log(value1[0], value1[1]);
         }
         addData(formData);
     };
@@ -181,7 +177,7 @@ export const Form = (props) => {
             return (
                 <button
                     type="submit"
-                    onClick={() => handleAddData()}
+                    onClick={handleAddData}
                     className="btn btn-info btn-cus"
                     disabled={!formik.isValid}
                 >
@@ -248,13 +244,18 @@ export const Form = (props) => {
                 <div className="box">
                     <form className="user">
                         <div className="form-group">
-                            <label>Số thẻ tai</label>
+                            <label>
+                                Số thẻ tai<span className="text-danger">*</span>
+                            </label>
                             <input
                                 type="text"
                                 className="form-control form-control-user"
                                 name="cardNumber"
                                 value={formik.values.cardNumber}
-                                onChange={formik.handleChange('cardNumber')}
+                                onChange={(e) => {
+                                    formik.handleChange('cardNumber');
+                                    setCardNumber(e.target.value);
+                                }}
                                 onBlur={formik.handleBlur('cardNumber')}
                                 ref={inputRef}
                             />
@@ -264,13 +265,18 @@ export const Form = (props) => {
                         </div>
                         {!isUpdate && (
                             <div className="form-group">
-                                <label>cPass</label>
+                                <label>
+                                    cPass <span className="text-danger">*</span>
+                                </label>
                                 <input
                                     type="text"
                                     className="form-control form-control-user"
                                     name="cPass"
                                     value={formik.values.cPass}
-                                    onChange={formik.handleChange('cPass')}
+                                    onChange={(e) => {
+                                        formik.handleChange('cPass');
+                                        setCPass(e.target.value);
+                                    }}
                                     onBlur={formik.handleBlur('cPass')}
                                     ref={inputRef}
                                 />
@@ -281,13 +287,90 @@ export const Form = (props) => {
                         )}
                         <div className="form-group">
                             <label>
+                                Ngày sinh<span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control form-control-user"
+                                name="birthOfDate"
+                                value={formik.values.birthOfDate}
+                                onChange={(e) => {
+                                    formik.handleChange('birthOfDate');
+                                    setBirthOfDate(e.target.value);
+                                }}
+                                onBlur={formik.handleBlur('birthOfDate')}
+                                ref={inputRef}
+                            />
+                            <div className="text-danger fs-6 mt-1">
+                                {formik.touched.birthOfDate && formik.errors.birthOfDate}
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Cân nặng sơ sinh<span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control form-control-user"
+                                name="pss"
+                                value={formik.values.pss}
+                                onChange={(e) => {
+                                    formik.handleChange('pss');
+                                    setPss(e.target.value);
+                                }}
+                                onBlur={formik.handleBlur('pss')}
+                                ref={inputRef}
+                            />
+                            <div className="text-danger fs-6 mt-1">{formik.touched.pss && formik.errors.pss}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Tuổi<span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control form-control-user"
+                                name="age"
+                                value={formik.values.age}
+                                onChange={(e) => {
+                                    formik.handleChange('age');
+                                    setAge(e.target.value);
+                                }}
+                                onBlur={formik.handleBlur('age')}
+                                ref={inputRef}
+                            />
+                            <div className="text-danger fs-6 mt-1">{formik.touched.age && formik.errors.age}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Cân nặng hiện tại<span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control form-control-user"
+                                name="pNow"
+                                value={formik.values.pNow}
+                                onChange={(e) => {
+                                    formik.handleChange('pNow');
+                                    setPNow(e.target.value);
+                                }}
+                                onBlur={formik.handleBlur('pNow')}
+                                ref={inputRef}
+                            />
+                            <div className="text-danger fs-6 mt-1">{formik.touched.pNow && formik.errors.pNow}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
                                 Nhóm bò<span className="text-danger">*</span>
                             </label>
                             <div>
                                 <select
                                     className="form-select form-control-user w-100 p-2 border color-sort"
                                     value={formik.values.cowGroupID}
-                                    onChange={formik.handleChange('cowGroupID')}
+                                    onChange={(e) => {
+                                        formik.handleChange('cowGroupID');
+                                        setCowGroupID(e.target.value);
+                                    }}
                                     onBlur={formik.handleBlur('cowGroupID')}
                                     ref={inputRef}
                                 >
@@ -311,7 +394,10 @@ export const Form = (props) => {
                                 <select
                                     className="form-select form-control-user w-100 p-2 border color-sort"
                                     value={formik.values.cowBreedID}
-                                    onChange={formik.handleChange('cowBreedID')}
+                                    onChange={(e) => {
+                                        formik.handleChange('cowBreedID');
+                                        setCowBreedID(e.target.value);
+                                    }}
                                     onBlur={formik.handleBlur('cowBreedID')}
                                     ref={inputRef}
                                 >
@@ -335,7 +421,10 @@ export const Form = (props) => {
                                 <select
                                     className="form-select form-control-user w-100 p-2 border color-sort"
                                     value={formik.values.farmID}
-                                    onChange={formik.handleChange('farmID')}
+                                    onChange={(e) => {
+                                        formik.handleChange('farmID');
+                                        setFarmID(e.target.value);
+                                    }}
                                     onBlur={formik.handleBlur('farmID')}
                                     ref={inputRef}
                                 >
@@ -351,13 +440,93 @@ export const Form = (props) => {
                         </div>
                         <div className="form-group">
                             <label>
+                                Cân nặng trung bình<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.awgID}
+                                    onChange={(e) => {
+                                        formik.handleChange('awgID');
+                                        setAwgID(e.target.value);
+                                    }}
+                                    onBlur={formik.handleBlur('awgID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">{formik.touched.awgID && formik.errors.awgID}</div>
+                        </div>{' '}
+                        <div className="form-group">
+                            <label>
+                                Thể trạng<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.conditionID}
+                                    onChange={(e) => {
+                                        formik.handleChange('conditionID');
+                                        setConditionID(e.target.value);
+                                    }}
+                                    onBlur={formik.handleBlur('conditionID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">
+                                {formik.touched.conditionID && formik.errors.conditionID}
+                            </div>
+                        </div>{' '}
+                        <div className="form-group">
+                            <label>
+                                Hiệu quả tăng trọng<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.wgeID}
+                                    onChange={(e) => {
+                                        formik.handleChange('wgeID');
+                                        setWgeID(e.target.value);
+                                    }}
+                                    onBlur={formik.handleBlur('wgeID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">{formik.touched.wgeID && formik.errors.wgeID}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
                                 Giới tính<span className="text-danger">*</span>
                             </label>
                             <div>
                                 <select
                                     className="form-select form-control-user w-100 p-2 border color-sort"
                                     value={formik.values.gender}
-                                    onChange={formik.handleChange('gender')}
+                                    onChange={(e) => {
+                                        formik.handleChange('gender');
+                                        setGender(e.target.value);
+                                    }}
                                     onBlur={formik.handleBlur('gender')}
                                     ref={inputRef}
                                 >

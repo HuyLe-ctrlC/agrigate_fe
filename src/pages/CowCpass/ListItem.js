@@ -122,18 +122,18 @@ export const ListItem = ({ data, openFormUpdate }) => {
                     <td>{item.id}</td>
                     <td>{item.card_number}</td>
                     <td>{item.cPass}</td>
-                    <td>{item.cow_group_ID}</td>
-                    <td>{item.farm_ID}</td>
-                    <td>{item.cow_breed_ID}</td>
+                    <td>{item.name_cow_groups}</td>
+                    <td>{item.name_farms}</td>
+                    <td>{item.name_cow_breeds}</td>
                     <td>{item.gender}</td>
                     <td>{item.image}</td>
                     <td>{item.birth_of_date}</td>
                     <td>{item.pss}</td>
                     <td>{item.age}</td>
                     <td>{item.pnow}</td>
-                    <td>{item.conditions_ID}</td>
-                    <td>{item.wge_ID}</td>
-                    <td>{item.awg_ID}</td>
+                    <td>{item.name_conditions}</td>
+                    <td>{item.name_wges}</td>
+                    <td>{item.name_awgs}</td>
                     <td>
                         <input
                             className="text-center border-0 color-sort"

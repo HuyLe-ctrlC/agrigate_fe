@@ -26,7 +26,6 @@ export const CowCpass = () => {
     const [formStatusState, setFormStatusState] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [publish, setPublish] = useState('');
     const [limit, setLimit] = useState(10);
     const [keyword, setKeyword] = useState('');
     const [cowGroup, setCowGroup] = useState([]);
@@ -35,6 +34,12 @@ export const CowCpass = () => {
     // const [awg, setAwg] = useState('');
     const [cowBreeds, setCowBreeds] = useState([]);
     const [farm, setFarm] = useState([]);
+    const [cowGroupID, setCowGroupID] = useState('');
+    const [conditionsID, setConditionsID] = useState('');
+    // const [wge, setWge] = useState('');
+    // const [awg, setAwg] = useState('');
+    const [cowBreedsID, setCowBreedsID] = useState('');
+    const [farmID, setFarmID] = useState('');
     // config general
     let start = currentPage - 1;
     let orderBy = 'desc';
@@ -45,7 +50,6 @@ export const CowCpass = () => {
         limit: limit,
         keyword: keyword,
         orderBy: orderBy,
-        publish: publish,
     };
     // get all data
     const getData = () => {
@@ -185,11 +189,17 @@ export const CowCpass = () => {
     };
     // ==== paging END ==== //
     // search data
-    const handleSearch = (keyword, publish) => {
+    const handleSearch = (keyword, farmID, conditionsID, cowBreedsID, cowGroupsID) => {
         params.keyword = keyword;
-        params.publish = publish;
-        setPublish(publish);
+        params.farmsID = farmID;
+        params.conditionsID = conditionsID;
+        params.cowBreedsID = cowBreedsID;
+        params.cowGroupsID = cowGroupsID;
         setKeyword(keyword);
+        setFarmID(farmID);
+        setConditionsID(conditionsID);
+        setCowBreedsID(cowBreedsID);
+        setCowGroupID(cowGroupsID);
         setCurrentPage(1);
         params.start = 0;
         getData();
@@ -205,9 +215,9 @@ export const CowCpass = () => {
     // create data event
     const handleAddData = async (data) => {
         setFormStatusState(false);
-        const dataJson = JSON.stringify(data);
+        // const dataJson = JSON.stringify(data);
 
-        const action = await dispatch(addDataAction(dataJson));
+        const action = await dispatch(addDataAction(data));
         if (addDataAction.fulfilled.match(action)) {
             const msg = action.payload.msg;
             // console.log(msg);

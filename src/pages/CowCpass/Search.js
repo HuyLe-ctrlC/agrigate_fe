@@ -14,7 +14,17 @@ export const Search = (props) => {
     const [farm, setFarm] = useState('');
     // search event
     const handleClickSearch = () => {
-        handleSearch(keySearch.trim(), formik.values.publishSelected);
+        console.log('formik.values.farm', formik.values.farm);
+        console.log('formik.values.conditions', formik.values.conditions);
+        console.log('formik.values.cowBreeds', formik.values.cowBreeds);
+        console.log('formik.values.cowGroup', formik.values.cowGroup);
+        handleSearch(
+            keySearch.trim(),
+            formik.values.farm,
+            formik.values.conditions,
+            formik.values.cowBreeds,
+            formik.values.cowGroup,
+        );
     };
     //formik
     const formik = useFormik({
@@ -39,7 +49,9 @@ export const Search = (props) => {
             >
                 <option value="">-- Chọn trang trại--</option>
                 {dataFarm?.map((item, index) => (
-                    <option key={item.id}>{item.name}</option>
+                    <option value={item.id} key={item.id}>
+                        {item.name}
+                    </option>
                 ))}
             </select>
             <select
@@ -51,7 +63,9 @@ export const Search = (props) => {
             >
                 <option value="">-- Chọn nhóm bò--</option>
                 {dataCowGroups?.map((item, index) => (
-                    <option key={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>
+                        {item.name}
+                    </option>
                 ))}
             </select>{' '}
             <select
@@ -63,7 +77,9 @@ export const Search = (props) => {
             >
                 <option value="">-- Chọn giống bò--</option>
                 {dataCowBreeds?.map((item, index) => (
-                    <option key={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>
+                        {item.name}
+                    </option>
                 ))}
             </select>{' '}
             <select
@@ -75,7 +91,9 @@ export const Search = (props) => {
             >
                 <option value="">-- Chọn thể trạng--</option>
                 {dataConditions?.map((item, index) => (
-                    <option key={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>
+                        {item.name}
+                    </option>
                 ))}
             </select>{' '}
             <div className="input-group w-75">
