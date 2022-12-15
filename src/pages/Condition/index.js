@@ -108,7 +108,7 @@ export const Condition = () => {
         const action = await dispatch(addDataAction(dataJson));
         if (addDataAction.fulfilled.match(action)) {
             const msg = action.payload.msg;
-            console.log(msg);
+            // console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',

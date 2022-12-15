@@ -1,4 +1,5 @@
-import axiosClient from './axiosClient';
+import axios from 'axios';
+import axiosClient, { axiosNotToken } from './axiosClient';
 
 const module = 'admins';
 
@@ -25,15 +26,18 @@ const adminApi = {
     },
     status: (id, body) => {
         const url = `/${module}/update-active/${id}`;
-        return axiosClient.put(url, { data: body });
+        // console.log('body', body);
+        return axiosClient.put(url, body);
     },
     login: (body) => {
-        const url = `/${module}/login`;
-        return axiosClient({ method: 'POST', url, data: body });
+        const url = `${process.env.REACT_APP_API_URL}/${module}/login`;
+        // console.log(url);
+        // console.log(body);
+        return axios({ method: 'POST', url, data: body });
     },
     forgot: (data) => {
         const url = `/${module}/forgot-password`;
-        return axiosClient.post(url, data);
+        return axiosNotToken.post(url, data);
     },
 
     updatePassword: (id, body) => {
@@ -42,6 +46,7 @@ const adminApi = {
     },
     getInfo: (id) => {
         const url = `/${module}/getbyid/${id}`;
+        // console.log(url);
         return axiosClient.get(url);
     },
 };

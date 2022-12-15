@@ -2,6 +2,7 @@ export const HOME = '/';
 export const LOGIN = '/login';
 export const LOGOUT = '/logout';
 export const REGISTER = '/register';
+export const FORGOT = '/forgot';
 export const UPDATE_PASSWORD = '/update-password';
 export const COW_BREEDS = '/cow-breeds';
 export const COW_GROUPS = '/cow-groups';

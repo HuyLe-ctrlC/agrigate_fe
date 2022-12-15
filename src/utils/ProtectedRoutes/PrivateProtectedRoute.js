@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const useAuth = () => {
-    const userToken = JSON.parse(localStorage.getItem('userInfo'));
+    const userToken = localStorage.getItem('userInfo');
     if (userToken) {
         const user = { token: true };
         return user && user.token;

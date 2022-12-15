@@ -52,6 +52,7 @@ function App() {
                             {/* <Route path={ROUTES.ROLE} element={<Role />} /> */}
                         </Route>
                     </Route>
+
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>

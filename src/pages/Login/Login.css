@@ -1,6 +1,12 @@
-.login_page .card{
+.login_page .card {
     margin: 20vh 0 0;
 }
-.login_page .card h1{
+.login_page .card h1 {
     text-transform: uppercase;
+}
+
+.input-pill-login {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 1.2rem 1rem;
 }

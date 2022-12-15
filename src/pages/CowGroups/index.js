@@ -93,7 +93,7 @@ export const CowGroups = () => {
         setKeyword(keyword);
         setCurrentPage(1);
         params.start = 0;
-        console.log('params', params);
+        // console.log('params', params);
         getData();
     };
 

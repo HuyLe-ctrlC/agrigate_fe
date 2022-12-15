@@ -33,7 +33,7 @@ export const Wge = () => {
     };
     // get all data
     const getData = () => {
-        // console.log(params);
+        console.log('params', params);
         document.title = title;
         dispatch(getAllAction(params));
     };

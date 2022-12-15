@@ -5,24 +5,19 @@ import adminApi from '../../api/adminApi';
 export const loginAction = createAsyncThunk(
     'admin/login',
     async (dataUpdate, { rejectWithValue, getState, dispatch }) => {
-        const username = dataUpdate?.username;
-        const password = dataUpdate?.password;
+        // const username = dataUpdate?.username;
+        // const password = dataUpdate?.password;
         try {
-            const data = {
-                username: username,
-                password: password,
-            };
-            console.log(data);
-            const body = JSON.stringify(data);
-            const response = await adminApi.login(body);
-            console.log(response);
+            const response = await adminApi.login(dataUpdate);
+            // console.log(response.data);
+            // console.log(response.data.accessToken);
             const result = {
-                token: response.token,
-                id: response.id,
+                token: response.data.accessToken,
+                id: response.data.id,
             };
-            localStorage.setItem('userInfo', JSON.stringify(response.token));
-            localStorage.setItem('userId', JSON.stringify(response.id));
-            localStorage.setItem('refreshToken', JSON.stringify(response.refreshToken));
+            localStorage.setItem('userInfo', JSON.stringify(response.data.accessToken));
+            localStorage.setItem('userId', JSON.stringify(response.data.id));
+            localStorage.setItem('refreshToken', JSON.stringify(response.data.refreshToken));
             return result;
         } catch (error) {
             // console.log('Failed to fetch data list: ', error);
@@ -39,16 +34,17 @@ export const loginAction = createAsyncThunk(
 export const forgotAction = createAsyncThunk('admin/forgot', async (email, { rejectWithValue, getState, dispatch }) => {
     try {
         // call Api
+        // console.log('email', email);
         const response = await adminApi.forgot({ email });
-        console.log('response ', response);
-        if (response.result) {
+        // console.log('response ', response);
+        if (response.data.result) {
             // const newData = response.data.newData;
             const results = {
-                msg: response.msg,
+                msg: response.data.msg,
             };
             return results;
         } else {
-            return rejectWithValue({ msg: response.msg });
+            return rejectWithValue({ msg: response.data.msg });
         }
     } catch (error) {
         // console.log("Failed to fetch data list: ", error);
@@ -83,15 +79,23 @@ export const getInfoAction = createAsyncThunk('admin/info', async (id, { rejectW
     try {
         // call Api
         const response = await adminApi.getInfo(id);
-        const results = {
-            name: response.data.name,
-            username: response.data.username,
-        };
-        return results;
+        console.log('response', response);
+
+        if (response.result) {
+            const results = {
+                name: response.data.name,
+                username: response.data.username,
+            };
+            return results;
+        } else {
+            console.log(response?.message);
+            return rejectWithValue(response?.message);
+        }
     } catch (error) {
         if (!error.response) {
             throw error;
         }
+        console.log(error);
         return rejectWithValue(error?.response?.data);
     }
 });
@@ -101,7 +105,7 @@ export const getAllAction = createAsyncThunk('admin/list', async (params, { reje
     try {
         // call Api
         const response = await adminApi.getAll(params);
-        console.log(response);
+        // console.log(response);
         if (response.result) {
             const results = {
                 data: response.data,
@@ -139,7 +143,10 @@ export const getByIdAction = createAsyncThunk('admin/admin', async (id, { reject
 export const addDataAction = createAsyncThunk('admin/add', async (data, { rejectWithValue, getState, dispatch }) => {
     try {
         // call Api
+        console.log(123);
+        console.log('data', data);
         const response = await adminApi.add(data);
+        console.log('response', response);
         if (response.result) {
             const newData = response.data.newData;
             const results = {
@@ -148,6 +155,7 @@ export const addDataAction = createAsyncThunk('admin/add', async (data, { reject
             };
             return results;
         } else {
+            console.log('response.errors.msg', response.errors.msg);
             return rejectWithValue(response.errors.msg);
         }
     } catch (error) {
@@ -169,7 +177,7 @@ export const updateDataAction = createAsyncThunk(
         try {
             // call Api
             const response = await adminApi.update(id, data);
-            console.log('response', response);
+            // console.log('response', response);
             if (response.result) {
                 const newData = response.data[0].newData;
                 const results = {
@@ -207,10 +215,14 @@ export const statusPublishAction = createAsyncThunk(
             };
             const body = JSON.stringify(data);
             const response = await adminApi.status(id, body);
+            console.log('response', response);
             if (response.result) {
                 const results = {
                     msg: response.data[0].msg,
+                    active: active,
+                    id: id,
                 };
+                console.log('results', results);
                 return results;
             } else {
                 return rejectWithValue(response.errors[0].msg);
@@ -259,7 +271,7 @@ export const updatePasswordAction = createAsyncThunk(
             };
             const body = JSON.stringify(data);
             const response = await adminApi.updatePassword(id, body);
-            console.log(response);
+            // console.log(response);
             if (response.result) {
                 const results = {
                     msg: response.data[0].msg,
@@ -308,6 +320,7 @@ const adminSlices = createSlice({
             .addCase(loginAction.rejected, (state, action) => {
                 state.loading = false;
                 state.appError = action?.payload;
+                console.log('action?.error?.message', action?.error?.message);
                 state.serverError = action?.error?.message;
             });
         //logout
@@ -345,7 +358,7 @@ const adminSlices = createSlice({
                 // state.loading = false;
                 state.appErr = action?.payload?.msg;
                 state.serverErr = action?.error?.message;
-                console.log(action.payload);
+                // console.log(action.payload);
             });
         //forgot password
         builder
@@ -354,21 +367,21 @@ const adminSlices = createSlice({
                 state.msgSuccess = undefined;
                 state.appError = undefined;
                 state.serverError = undefined;
-                console.log('pendding', state.loading);
+                // console.log('pendding', state.loading);
             })
             .addCase(forgotAction.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(action?.payload?.msg);
+                // console.log(action?.payload?.msg);
                 // add new data into store
                 state.data = action?.payload?.data;
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;
-                console.log('sss', state.loading);
+                // console.log('sss', state.loading);
             })
             .addCase(forgotAction.rejected, (state, action) => {
-                // state.loading = false;
-                console.log(action?.payload);
+                state.loading = false;
+                // console.log(action?.payload);
                 state.msgSuccess = undefined;
                 state.appError = action?.payload?.msg;
                 state.serverError = action?.error?.message;
@@ -376,20 +389,20 @@ const adminSlices = createSlice({
         //get info
         builder
             .addCase(getInfoAction.pending, (state, action) => {
-                // state.loading = true;
+                state.loading = true;
                 state.appErr = undefined;
                 state.serverErr = undefined;
             })
             .addCase(getInfoAction.fulfilled, (state, action) => {
-                // state.loading = false;
-                state.info = action?.payload;
+                state.loading = false;
+                state.userAuth.info = action?.payload;
                 state.appErr = undefined;
                 state.serverErr = undefined;
             })
             .addCase(getInfoAction.rejected, (state, action) => {
-                // state.loading = false;
-                state.appErr = action?.payload?.message;
-                state.serverErr = action?.error?.message;
+                state.loading = false;
+                state.userAuth.info = action?.payload;
+                state.userAuth.infoError = action?.error?.message;
             });
         //get all
         builder
@@ -493,9 +506,14 @@ const adminSlices = createSlice({
                 state.serverError = action?.error?.message;
             });
 
-        //delete data by id
+        //Update active by id
         builder
             .addCase(statusPublishAction.fulfilled, (state, action) => {
+                // find and update row data in store
+                const checkIndex = state.data.findIndex((row) => row.id.toString() === action?.payload?.id.toString());
+                if (checkIndex >= 0) {
+                    state.data[checkIndex].active = action?.payload?.active;
+                }
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

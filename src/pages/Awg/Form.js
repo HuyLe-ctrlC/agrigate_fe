@@ -100,7 +100,7 @@ const Form = React.forwardRef((props, ref) => {
         if (isUpdate) {
             return (
                 <button
-                    type="button"
+                    type="submit"
                     onClick={() => handleUpdateData()}
                     className="btn btn-info btn-cus"
                     disabled={!formik.isValid}
@@ -111,7 +111,7 @@ const Form = React.forwardRef((props, ref) => {
         } else {
             return (
                 <button
-                    type="button"
+                    type="submit"
                     onClick={() => handleAddData()}
                     className="btn btn-info btn-cus"
                     disabled={!formik.isValid}

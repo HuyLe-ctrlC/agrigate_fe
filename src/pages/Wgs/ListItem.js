@@ -79,7 +79,7 @@ export const ListItem = ({ data, openFormUpdate }) => {
         if (!!sort) {
             setSort(e.target.value);
             const resultAction = await dispatch(sortAction({ id, sort }));
-            console.log('resultAction', resultAction);
+            // console.log('resultAction', resultAction);
             if (sortAction.fulfilled.match(resultAction)) {
                 // const msg = resultAction.payload;
                 // console.log(msg);
