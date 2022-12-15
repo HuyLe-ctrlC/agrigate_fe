@@ -3,22 +3,34 @@ import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { selectCowBreeds } from '../../redux/slices/cowBreedsSlice';
-
+import { genderCow } from '../../constants/publish/publishConstant';
 const formSchema = Yup.object({
     name: Yup.string().required('*Dữ liệu bắt buộc!'),
     code: Yup.string().required('*Dữ liệu bắt buộc!'),
 });
 
 export const Form = (props) => {
-    const [name, setName] = useState('');
-    const [publish, setPublish] = useState(true);
+    const [cardNumber, setCardNumber] = useState('');
+    const [cPass, setCPass] = useState('');
+    const [dateAdded, setDateAdded] = useState('');
+    const [cowGroupID, setCowGroupID] = useState('');
+    const [cowBreedID, setCowBreedID] = useState('');
+    const [farmID, setFarmID] = useState('');
+    const [gender, setGender] = useState('');
+    const [birthOfDate, setBirthOfDate] = useState('');
+    const [pss, setPss] = useState('');
+    const [age, setAge] = useState('');
+    const [pNow, setPNow] = useState('');
+    const [conditionID, setConditionID] = useState('');
+    const [wgeID, setWgeID] = useState('');
+    const [awgID, setAwgID] = useState('');
+    const [files, setFiles] = useState('');
     // get props to index components
     const { closeForm, isUpdate, addData, updateDate } = props;
     // console.log(isUpdate);
     // get data update to redux
     const cowBreedsData = useSelector(selectCowBreeds);
     const { dataUpdate } = cowBreedsData;
-    const [code, setCode] = useState('');
     // console.log(dataUpdate);
     //useRef
     const inputRef = useRef();
@@ -28,17 +40,51 @@ export const Form = (props) => {
         focus();
         if (isUpdate) {
             if (dataUpdate) {
-                // console.log(123);
-                // console.log(dataUpdate[0]);
-                if (dataUpdate[0]?.code !== undefined) {
-                    setCode(dataUpdate[0]?.code);
+                console.log('dataUpdate', dataUpdate[0]);
+                if (dataUpdate[0]?.card_number !== undefined) {
+                    setCardNumber(dataUpdate[0]?.card_number);
                 }
-                if (dataUpdate[0]?.name !== undefined) {
-                    setName(dataUpdate[0]?.name);
+                if (dataUpdate[0]?.cPass !== undefined) {
+                    setCPass(dataUpdate[0]?.cPass);
                 }
-
-                if (dataUpdate[0]?.publish !== undefined) {
-                    setPublish(dataUpdate[0]?.publish ? true : false);
+                if (dataUpdate[0]?.cPass !== undefined) {
+                    setCPass(dataUpdate[0]?.cPass);
+                }
+                if (dataUpdate[0]?.date_added !== undefined) {
+                    setDateAdded(dataUpdate[0]?.date_added);
+                }
+                if (dataUpdate[0]?.cow_group_ID !== undefined) {
+                    setCowGroupID(dataUpdate[0]?.cow_group_ID);
+                }
+                if (dataUpdate[0]?.cow_breed_ID !== undefined) {
+                    setCowBreedID(dataUpdate[0]?.cow_breed_ID);
+                }
+                if (dataUpdate[0]?.farm_ID !== undefined) {
+                    setFarmID(dataUpdate[0]?.farm_ID);
+                }
+                if (dataUpdate[0]?.gender !== undefined) {
+                    setGender(dataUpdate[0]?.gender);
+                }
+                if (dataUpdate[0]?.birth_of_date !== undefined) {
+                    setBirthOfDate(dataUpdate[0]?.birth_of_date);
+                }
+                if (dataUpdate[0]?.pss !== undefined) {
+                    setPss(dataUpdate[0]?.pss);
+                }
+                if (dataUpdate[0]?.age !== undefined) {
+                    setAge(dataUpdate[0]?.age);
+                }
+                if (dataUpdate[0]?.pnow !== undefined) {
+                    setPNow(dataUpdate[0]?.pnow);
+                }
+                if (dataUpdate[0]?.conditions_ID !== undefined) {
+                    setConditionID(dataUpdate[0]?.conditions_ID);
+                }
+                if (dataUpdate[0]?.wge_ID !== undefined) {
+                    setWgeID(dataUpdate[0]?.wge_ID);
+                }
+                if (dataUpdate[0]?.awg_ID !== undefined) {
+                    setAwgID(dataUpdate[0]?.awg_ID);
                 }
             }
         }
@@ -48,27 +94,75 @@ export const Form = (props) => {
     const handleCloseForm = () => {
         closeForm();
     };
+
+    //update image
+    const [imgData, setImgData] = useState(null);
+    const onChangePicture = (e) => {
+        if (e.target.files[0]) {
+            // setImageDefault(false);
+            setFiles(e.target.files[0]);
+            const reader = new FileReader();
+            reader.onload = async function () {
+                setImgData(reader.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
     // update data event
     const handleUpdateData = () => {
         const id = dataUpdate[0]?.id;
-        let dataUpdateNew = {
-            code: formik.values.code,
-            name: formik.values.name,
-            publish: publish,
-        };
-        // console.log(dataUpdateNew);
-        updateDate(id, dataUpdateNew);
+        let formData = new FormData();
+        formData.append('card_number', formik.values.cardNumber);
+        formData.append('cPass', formik.values.cPass);
+        formData.append('date_added', formik.values.dateAdded);
+        formData.append('cow_group_ID', formik.values.cowGroupID);
+        formData.append('cow_breed_ID', formik.values.cowBreedID);
+        formData.append('farm_ID', formik.values.farmID);
+        formData.append('gender', formik.values.gender);
+        formData.append('birth_of_date', formik.values.birthOfDate);
+        formData.append('pss', formik.values.pss);
+        formData.append('age', formik.values.age);
+        formData.append('pnow', formik.values.pNow);
+        formData.append('conditions_ID', formik.values.conditionID);
+        formData.append('wge_ID', formik.values.wgeID);
+        formData.append('awg_ID', formik.values.awgID);
+        formData.append('userID', formik.values.userID);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('image', files[i]);
+        }
+        for (let value1 of formData) {
+            // console.log(value1[0], value1[1]);
+        }
+        updateDate(id, formData);
     };
 
     // create data event
     const handleAddData = () => {
-        let data = {
-            code: formik.values.code,
-            name: formik.values.name,
-            publish: publish,
-        };
-        // console.log(data);
-        addData(data);
+        let formData = new FormData();
+        formData.append('card_number', formik.values.cardNumber);
+        formData.append('cPass', formik.values.cPass);
+        formData.append('date_added', formik.values.dateAdded);
+        formData.append('cow_group_ID', formik.values.cowGroupID);
+        formData.append('cow_breed_ID', formik.values.cowBreedID);
+        formData.append('farm_ID', formik.values.farmID);
+        formData.append('gender', formik.values.gender);
+        formData.append('birth_of_date', formik.values.birthOfDate);
+        formData.append('pss', formik.values.pss);
+        formData.append('age', formik.values.age);
+        formData.append('pnow', formik.values.pNow);
+        formData.append('conditions_ID', formik.values.conditionID);
+        formData.append('wge_ID', formik.values.wgeID);
+        formData.append('awg_ID', formik.values.awgID);
+        formData.append('userID', formik.values.userID);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('image', files[i]);
+        }
+        for (let value1 of formData) {
+            // console.log(value1[0], value1[1]);
+        }
+        addData(formData);
     };
     // check show button action
     const showButtonAction = () => {
@@ -101,8 +195,21 @@ export const Form = (props) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            code: code,
-            name: name,
+            cardNumber: cardNumber,
+            cPass: cPass,
+            dateAdded: dateAdded,
+            cowGroupID: cowGroupID,
+            cowBreedID: cowBreedID,
+            farmID: farmID,
+            gender: gender,
+            birthOfDate: birthOfDate,
+            pss: pss,
+            age: age,
+            pNow: pNow,
+            conditionID: conditionID,
+            wgeID: wgeID,
+            awgID: awgID,
+            image: files,
         },
         validationSchema: formSchema,
     });
@@ -110,7 +217,27 @@ export const Form = (props) => {
     const focus = () => {
         inputRef.current?.focus();
     };
-
+    const dataFake = {
+        data: [
+            {
+                name: 'Bo1',
+                id: 1,
+            },
+            {
+                name: 'Bo2',
+                id: 2,
+            },
+            {
+                name: 'Bo3',
+                id: 3,
+            },
+            {
+                name: 'Bo4',
+                id: 4,
+            },
+        ],
+    };
+    console.log('files', files);
     return (
         <div className="form-box">
             <div className="form">
@@ -120,49 +247,185 @@ export const Form = (props) => {
                 </button>
                 <div className="box">
                     <form className="user">
-                        {!isUpdate && (
-                            <div className="form-group">
-                                <label>Mã</label>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-user"
-                                    name="code"
-                                    value={formik.values.code}
-                                    onChange={formik.handleChange('code')}
-                                    onBlur={formik.handleBlur('code')}
-                                    ref={inputRef}
-                                />
-                                <div className="text-danger fs-6 mt-1">{formik.touched.code && formik.errors.code}</div>
-                            </div>
-                        )}
                         <div className="form-group">
-                            <label>Tên</label>
+                            <label>Số thẻ tai</label>
                             <input
                                 type="text"
                                 className="form-control form-control-user"
-                                name="name"
-                                value={formik.values.name}
-                                onChange={formik.handleChange('name')}
-                                onBlur={formik.handleBlur('name')}
-                                ref={isUpdate ? inputRef : inputNameRef}
+                                name="cardNumber"
+                                value={formik.values.cardNumber}
+                                onChange={formik.handleChange('cardNumber')}
+                                onBlur={formik.handleBlur('cardNumber')}
+                                ref={inputRef}
                             />
-                            <div className="text-danger fs-6 mt-1">{formik.touched.name && formik.errors.name}</div>
+                            <div className="text-danger fs-6 mt-1">
+                                {formik.touched.cardNumber && formik.errors.cardNumber}
+                            </div>
                         </div>
-
-                        <div className="form-group">
-                            <div className="custom-control custom-switch">
+                        {!isUpdate && (
+                            <div className="form-group">
+                                <label>cPass</label>
                                 <input
-                                    type="checkbox"
-                                    className="custom-control-input"
-                                    id="publish"
-                                    name="publish"
-                                    value={publish}
-                                    checked={publish}
-                                    onChange={(e) => setPublish(e.target.checked)}
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    name="cPass"
+                                    value={formik.values.cPass}
+                                    onChange={formik.handleChange('cPass')}
+                                    onBlur={formik.handleBlur('cPass')}
+                                    ref={inputRef}
                                 />
-                                <label className="custom-control-label" htmlFor="publish">
-                                    Hiển thị
-                                </label>
+                                <div className="text-danger fs-6 mt-1">
+                                    {formik.touched.cPass && formik.errors.cPass}
+                                </div>
+                            </div>
+                        )}
+                        <div className="form-group">
+                            <label>
+                                Nhóm bò<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.cowGroupID}
+                                    onChange={formik.handleChange('cowGroupID')}
+                                    onBlur={formik.handleBlur('cowGroupID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">
+                                {formik.touched.cowGroupID && formik.errors.cowGroupID}
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Giống bò<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.cowBreedID}
+                                    onChange={formik.handleChange('cowBreedID')}
+                                    onBlur={formik.handleBlur('cowBreedID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">
+                                {formik.touched.cowBreedID && formik.errors.cowBreedID}
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Trang trại<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.farmID}
+                                    onChange={formik.handleChange('farmID')}
+                                    onBlur={formik.handleBlur('farmID')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {dataFake?.data?.map((item, index) => (
+                                        <option value={item.id} key={index}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">{formik.touched.farmID && formik.errors.farmID}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Giới tính<span className="text-danger">*</span>
+                            </label>
+                            <div>
+                                <select
+                                    className="form-select form-control-user w-100 p-2 border color-sort"
+                                    value={formik.values.gender}
+                                    onChange={formik.handleChange('gender')}
+                                    onBlur={formik.handleBlur('gender')}
+                                    ref={inputRef}
+                                >
+                                    <option value="">-- Chọn --</option>
+                                    {genderCow?.map((item, index) => (
+                                        <option value={item.value} key={index}>
+                                            {item.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="text-danger mt-1">{formik.touched.gender && formik.errors.gender}</div>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Hình ảnh <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                multiple
+                                type="file"
+                                className="form-control form-control-user input-type-file rounded-pill"
+                                name="image"
+                                onChange={onChangePicture}
+                                onBlur={formik.handleBlur('image')}
+                                accept="image/png, image/jpeg, image/jpg"
+                            />
+                            <img
+                                id="imageProduct"
+                                className="size-thumb-tag img-thumbnail mt-2"
+                                src={
+                                    imgData ? imgData : `${process.env.REACT_APP_API_URL_IMG}/products/thumbs/${files}`
+                                }
+                                alt="preview"
+                                hidden={files == '' ? true : false}
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    // setImageDefault(true);
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                            {/* {imgData?.map((image) => (
+                                <img
+                                    id="imageProduct"
+                                    className="size-thumb-tag img-thumbnail mt-2"
+                                    src={image ? image : image}
+                                    // src={
+                                    //     image ? image : `${process.env.REACT_APP_API_URL_IMG}/products/thumbs/${files}`
+                                    // }
+                                    alt="preview"
+                                    hidden={files == '' ? true : false}
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; // prevents looping
+                                        // setImageDefault(true);
+                                        currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                    }}
+                                />
+                            ))} */}
+                            <div className="text-danger fs-6 mt-1">{formik.touched.image && formik.errors.image}</div>
+                            <div className="text-danger fs-6 mt-1">
+                                {files?.length === 0 ? '' : files?.length > 6 ? 'Tối đa là 6 file' : ''}
+                                {files[0]?.size > 2097152 ||
+                                files[1]?.size > 2097152 ||
+                                files[2]?.size > 2097152 ||
+                                files[3]?.size > 2097152 ||
+                                files[4]?.size > 2097152 ||
+                                files[5]?.size > 2097152
+                                    ? '*Hình ảnh phải nhỏ hơn 2MB!'
+                                    : ''}
                             </div>
                         </div>
                         <div className="form-group">

@@ -4,10 +4,10 @@ export const publishType = [
     { value: 1, label: constantStatus.ONPUBLISH },
 ];
 
-// export const paymentStatus = [
-//     { value: 0, label: constantStatus.NOT_COMPLETE },
-//     { value: 1, label: constantStatus.COMPLETE },
-// ];
+export const genderCow = [
+    { value: 0, label: constantStatus.FEMALE },
+    { value: 1, label: constantStatus.MALE },
+];
 
 // export const status = [
 //     { value: 0, label: constantStatus.STATUSNEWFEEDBACK },
