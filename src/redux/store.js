@@ -8,6 +8,7 @@ import awgReducer from './slices/awgSlices';
 import weightP0Reducer from './slices/weightP0Slices';
 import wgsReducer from './slices/wgsSlices';
 import adminReducer from './slices/adminSlices';
+import cowCpassReducer from './slices/cowCpassSlice';
 const store = configureStore({
     reducer: {
         form: formReducer,
@@ -19,6 +20,7 @@ const store = configureStore({
         weightP0: weightP0Reducer,
         wgs: wgsReducer,
         admin: adminReducer,
+        cowCpass: cowCpassReducer,
     },
 });
 

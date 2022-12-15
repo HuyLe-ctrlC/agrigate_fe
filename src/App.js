@@ -19,6 +19,7 @@ import { Password } from './pages/Password';
 import { Weight } from './pages/Weight';
 import { Wgs } from './pages/Wgs';
 import { Config } from './pages/Config';
+import { CowCpass } from './pages/CowCpass';
 
 function App() {
     useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
                             <Route path={ROUTES.WEIGHT} element={<Weight />} />
                             <Route path={ROUTES.WGS} element={<Wgs />} />
                             <Route path={ROUTES.CONFIG} element={<Config />} />
+                            <Route path={ROUTES.COWCPASS} element={<CowCpass />} />
 
                             {/* account & role */}
                             <Route path={ROUTES.AWG} element={<Awg />} />

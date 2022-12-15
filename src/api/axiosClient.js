@@ -39,7 +39,7 @@ axiosClient.interceptors.request.use(async (config) => {
                 url: `${process.env.REACT_APP_API_URL}/admins/refreshToken`,
                 data: { refreshToken },
             });
-console.log("res", res);
+            // console.log("res", res);
             localStorage.setItem('userInfo', JSON.stringify(res.data.accessToken));
             config.headers.Authorization = `Bearer ${res.data.accessToken}`;
         } catch (error) {

@@ -65,6 +65,9 @@ export const SideBar = () => {
                             <Link className="collapse-item hover-sidebar" to={ROUTES.CONFIG}>
                                 <i className="fa-solid fa-arrow-right"></i> Quản lý cấu hìnhh
                             </Link>
+                            <Link className="collapse-item hover-sidebar" to={ROUTES.COWCPASS}>
+                                <i className="fa-solid fa-arrow-right"></i> Quản lý CPass
+                            </Link>
                         </div>
                     </div>
                 </li>

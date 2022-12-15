@@ -79,7 +79,7 @@ export const getInfoAction = createAsyncThunk('admin/info', async (id, { rejectW
     try {
         // call Api
         const response = await adminApi.getInfo(id);
-        console.log('response', response);
+        // console.log('response', response);
 
         if (response.result) {
             const results = {
