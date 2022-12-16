@@ -55,6 +55,7 @@ export const addDataAction = createAsyncThunk('cowCpass/add', async (data, { rej
         console.log('response', response);
         if (response.data.result) {
             const newData = response.data.data[0].newData;
+            console.log('newData', newData);
             const results = {
                 data: newData,
                 msg: response.data.data[0].msg,
@@ -241,7 +242,9 @@ const cowCpassSlices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // add new data into store
-                state.data = [action?.payload?.data].concat(state.data);
+                const { data } = action?.payload;
+                state.data = state.data?.length > 0 ? state.data : [];
+                state.data = [data, ...state.data];
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

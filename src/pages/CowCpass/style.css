@@ -79,3 +79,18 @@ tbody tr td span {
     overflow: hidden;
     display: block;
 }
+.width-cpass-cow {
+    width: 44% !important;
+}
+
+@media (max-width: 1046px) {
+    .width-cpass-cow {
+        width: 100% !important;
+    }
+}
+
+.size-img-cpass {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
