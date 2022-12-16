@@ -4,6 +4,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { selectCowBreeds } from '../../redux/slices/cowBreedsSlice';
 import { genderCow } from '../../constants/publish/publishConstant';
+import { selectCowGroups } from '../../redux/slices/cowGroupsSlice';
+import { selectCondition } from '../../redux/slices/conditionSlices';
+import { selectAwg } from '../../redux/slices/awgSlices';
+import { selectWge } from '../../redux/slices/wgeSlices';
+import { selectcowCpass } from '../../redux/slices/cowCpassSlice';
 const formSchema = Yup.object({
     // name: Yup.string().required('*Dữ liệu bắt buộc!'),
     // code: Yup.string().required('*Dữ liệu bắt buộc!'),
@@ -26,11 +31,17 @@ export const Form = (props) => {
     const [awgID, setAwgID] = useState('');
     const [files, setFiles] = useState('');
     // get props to index components
-    const { closeForm, isUpdate, addData, updateDate } = props;
+    const { closeForm, isUpdate, addData, dataFarm, updateDate } = props;
     // console.log(isUpdate);
     // get data update to redux
+    const cowCpassData = useSelector(selectcowCpass);
+    const { dataUpdate } = cowCpassData;
     const cowBreedsData = useSelector(selectCowBreeds);
-    const { dataUpdate } = cowBreedsData;
+    const cowGroupsData = useSelector(selectCowGroups);
+    const conditionData = useSelector(selectCondition);
+    const awgsData = useSelector(selectAwg);
+    const wgesData = useSelector(selectWge);
+
     // console.log(dataUpdate);
     //useRef
     const inputRef = useRef();
@@ -375,7 +386,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {cowGroupsData?.data?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>
@@ -402,7 +413,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {cowBreedsData?.data?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>
@@ -429,7 +440,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {dataFarm?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>
@@ -454,7 +465,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {awgsData?.data?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>
@@ -479,7 +490,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {conditionData?.data?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>
@@ -506,7 +517,7 @@ export const Form = (props) => {
                                     ref={inputRef}
                                 >
                                     <option value="">-- Chọn --</option>
-                                    {dataFake?.data?.map((item, index) => (
+                                    {wgesData?.data?.map((item, index) => (
                                         <option value={item.id} key={index}>
                                             {item.name}
                                         </option>

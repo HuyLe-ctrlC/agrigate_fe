@@ -17,7 +17,13 @@ import Swal from 'sweetalert2';
 import { async } from 'q';
 import axiosClient from '../../api/axiosClient';
 import PATH from '../../constants/path';
-// import { selectCowBreeds } from "../../redux/slices/cowBreedsSlice";
+import { getAllAction as getAllActionCowBreeds } from '../../redux/slices/cowBreedsSlice';
+import { getAllAction as getAllActionCowGrooups } from '../../redux/slices/cowGroupsSlice';
+import { getAllAction as getAllActionConditions } from '../../redux/slices/conditionSlices';
+import { getAllAction as getAllActionAwgs } from '../../redux/slices/awgSlices';
+import { getAllAction as getAllActionWges } from '../../redux/slices/wgeSlices';
+// import { getAllAction as getAllActionConditions } from "../../redux/slices/conditionSlices";
+// import { getAllAction as getAllActionFarms } from "../../redux/slices/farm";
 
 export const CowCpass = () => {
     const title = 'Quản lý CPass';
@@ -209,6 +215,11 @@ export const CowCpass = () => {
     const handleOpenFormAdd = () => {
         setFormStatusState(true);
         const action = openForm();
+        dispatch(getAllActionAwgs(''));
+        dispatch(getAllActionConditions(''));
+        dispatch(getAllActionCowBreeds(''));
+        dispatch(getAllActionCowGrooups(''));
+        dispatch(getAllActionWges(''));
         dispatch(action);
     };
 
@@ -306,6 +317,11 @@ export const CowCpass = () => {
         setIsUpdate(true);
         // get data by ID
         // console.log(id);
+        dispatch(getAllActionAwgs(''));
+        dispatch(getAllActionConditions(''));
+        dispatch(getAllActionCowBreeds(''));
+        dispatch(getAllActionCowGrooups(''));
+        dispatch(getAllActionWges(''));
         dispatch(getByIdAction(id));
     };
 
@@ -324,6 +340,7 @@ export const CowCpass = () => {
                     closeForm={handleCloseForm}
                     isUpdate={isUpdate}
                     addData={handleAddData}
+                    dataFarm={farm}
                     updateDate={handleUpdateData}
                 />
             );

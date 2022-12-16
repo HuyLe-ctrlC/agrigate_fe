@@ -53,15 +53,15 @@ export const addDataAction = createAsyncThunk('cowCpass/add', async (data, { rej
         // call Api
         const response = await cowCpassApi.add(data);
         console.log('response', response);
-        if (response.result) {
-            const newData = response.data[0].newData;
+        if (response.data.result) {
+            const newData = response.data.data[0].newData;
             const results = {
                 data: newData,
-                msg: response.data[0].msg,
+                msg: response.data.data[0].msg,
             };
             return results;
         } else {
-            return rejectWithValue(response.errors[0].msg);
+            return rejectWithValue(response.data.errors[0].msg);
         }
     } catch (error) {
         // console.log("Failed to fetch data list: ", error);
