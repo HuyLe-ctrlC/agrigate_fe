@@ -9,6 +9,7 @@ import { selectCondition } from '../../redux/slices/conditionSlices';
 import { selectAwg } from '../../redux/slices/awgSlices';
 import { selectWge } from '../../redux/slices/wgeSlices';
 import { selectcowCpass } from '../../redux/slices/cowCpassSlice';
+import { format } from 'date-fns';
 const formSchema = Yup.object({
     // name: Yup.string().required('*Dữ liệu bắt buộc!'),
     // code: Yup.string().required('*Dữ liệu bắt buộc!'),
@@ -70,7 +71,7 @@ export const Form = (props) => {
                     setGender(dataUpdate[0]?.gender);
                 }
                 if (dataUpdate[0]?.birth_of_date !== undefined) {
-                    setBirthOfDate(dataUpdate[0]?.birth_of_date);
+                    setBirthOfDate(format(new Date(dataUpdate[0]?.birth_of_date), 'yyyy-MM-dd'));
                 }
                 if (dataUpdate[0]?.pss !== undefined) {
                     setPss(dataUpdate[0]?.pss);
@@ -131,12 +132,11 @@ export const Form = (props) => {
         let formData = new FormData();
         formData.append('card_number', formik.values.cardNumber);
         formData.append('cPass', formik.values.cPass);
-        formData.append('date_added', formik.values.dateAdded);
         formData.append('cow_group_ID', formik.values.cowGroupID);
         formData.append('cow_breed_ID', formik.values.cowBreedID);
         formData.append('farm_ID', formik.values.farmID);
         formData.append('gender', formik.values.gender);
-        formData.append('birth_of_date', formik.values.birthOfDate);
+        formData.append('birth_of_date', Date.parse(formik.values.birthOfDate));
         formData.append('pss', formik.values.pss);
         formData.append('age', formik.values.age);
         formData.append('pnow', formik.values.pNow);
@@ -148,7 +148,7 @@ export const Form = (props) => {
             formData.append('image', files[i]);
         }
         for (let value1 of formData) {
-            // console.log(value1[0], value1[1]);
+            console.log(value1[0], value1[1]);
         }
         updateDate(id, formData);
     };
@@ -231,8 +231,9 @@ export const Form = (props) => {
     const focus = () => {
         inputRef.current?.focus();
     };
-    console.log('files', files);
-    console.log('preview', imgData.length);
+    // console.log('files', files);
+    // console.log('preview', imgData.length);
+    console.log(formik.values.birthOfDate);
     return (
         <div className="form-box w-50">
             <div className="form">
@@ -376,7 +377,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {cowGroupsData?.data?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -403,7 +404,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {cowBreedsData?.data?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -430,7 +431,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {dataFarm?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -455,7 +456,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {awgsData?.data?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -480,7 +481,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {conditionData?.data?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -489,7 +490,7 @@ export const Form = (props) => {
                                 <div className="text-danger mt-1">
                                     {formik.touched.conditionID && formik.errors.conditionID}
                                 </div>
-                            </div>{' '}
+                            </div>
                             <div className="form-group width-cpass-cow mx-3">
                                 <label>
                                     Hiệu quả tăng trọng <span className="text-danger">*</span>
@@ -507,7 +508,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {wgesData?.data?.map((item, index) => (
-                                            <option value={item.id} key={index}>
+                                            <option value={item.id} key={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -532,7 +533,7 @@ export const Form = (props) => {
                                     >
                                         <option value="">-- Chọn --</option>
                                         {genderCow?.map((item, index) => (
-                                            <option value={item.value} key={index}>
+                                            <option value={item.value} key={item.value}>
                                                 {item.label}
                                             </option>
                                         ))}
@@ -571,21 +572,18 @@ export const Form = (props) => {
                                         />
                                     ))) ||
                                     Array.from(files).map((img, index) => (
-                                        <>
-                                            <h1>hello</h1>
-                                            <img
-                                                key={index}
-                                                id="imageProduct"
-                                                className="size-thumb-tag img-thumbnail mt-2"
-                                                src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/thumb/${files[index]}`}
-                                                alt="preview"
-                                                hidden={files == '' ? true : false}
-                                                onError={({ currentTarget }) => {
-                                                    currentTarget.onerror = null; // prevents looping
-                                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                                }}
-                                            />
-                                        </>
+                                        <img
+                                            key={index}
+                                            id="imageProduct"
+                                            className="size-thumb-tag img-thumbnail mt-2"
+                                            src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/thumb/${files[index]}`}
+                                            alt="preview"
+                                            hidden={files == '' ? true : false}
+                                            onError={({ currentTarget }) => {
+                                                currentTarget.onerror = null; // prevents looping
+                                                currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                            }}
+                                        />
                                     ))}
                             </div>
 

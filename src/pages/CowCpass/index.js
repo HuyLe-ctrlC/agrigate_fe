@@ -59,7 +59,7 @@ export const CowCpass = () => {
     };
     // get all data
     const getData = () => {
-        // console.log(params);
+        console.log('params', params);
         document.title = title;
         dispatch(getAllAction(params));
     };
@@ -268,10 +268,10 @@ export const CowCpass = () => {
     const handleUpdateData = async (id, data) => {
         setFormStatusState(false);
         setIsUpdate(false);
-        const dataJson = JSON.stringify(data);
+        // const dataJson = JSON.stringify(data);
         const datas = {
             id: id,
-            data: dataJson,
+            data,
         };
         // console.log(datas);
         const updateAction = await dispatch(updateDataAction(datas));

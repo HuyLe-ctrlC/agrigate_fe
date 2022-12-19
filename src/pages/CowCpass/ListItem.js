@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { deleteAction, sortAction, statusPublishAction } from '../../redux/slices/cowBreedsSlice';
+import { deleteAction, sortAction, statusPublishAction } from '../../redux/slices/cowCpassSlice';
 import { format } from 'date-fns';
 
 export const ListItem = ({ data, openFormUpdate }) => {
@@ -126,136 +126,70 @@ export const ListItem = ({ data, openFormUpdate }) => {
                     <td>{item.name_cow_groups}</td>
                     <td>{item.name_farms}</td>
                     <td>{item.name_cow_breeds}</td>
-                    <td>{item.gender}</td>
+                    <td>{item.gender === 0 ? 'Cái' : 'Đực'}</td>
 
                     <td>
-                        {!!item.dataImage ? (
-                            <>
-                                <h1>hello</h1>
-                                <div className="d-flex mb-1">
-                                    <img
-                                        className="size-img-cpass "
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_one}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_two}`}
-                                        alt=""
-                                        className="mx-1 size-img-cpass"
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_three}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                </div>
-                                <div className="d-flex">
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_four}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_five}`}
-                                        alt=""
-                                        className="mx-1 size-img-cpass"
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.dataImage.name_image_six}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                </div>
-                            </>
-                        ) : (
-                            <td>
-                                <div className="d-flex mb-1">
-                                    <img
-                                        className="size-img-cpass "
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_one}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_two}`}
-                                        alt=""
-                                        className="mx-1 size-img-cpass"
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_three}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                </div>
-                                <div className="d-flex">
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_four}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_five}`}
-                                        alt=""
-                                        className="mx-1 size-img-cpass"
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                    <img
-                                        className="size-img-cpass"
-                                        src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_six}`}
-                                        alt=""
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.onerror = null; // prevents looping
-                                            currentTarget.src = require('../../assets/image/image-coming-soon.png');
-                                        }}
-                                    />
-                                </div>
-                            </td>
-                        )}
+                        <div className="d-flex mb-1">
+                            <img
+                                className="size-img-cpass "
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_one}`}
+                                alt=""
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                            <img
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_two}`}
+                                alt=""
+                                className="mx-1 size-img-cpass"
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                            <img
+                                className="size-img-cpass"
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_three}`}
+                                alt=""
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                        </div>
+                        <div className="d-flex">
+                            <img
+                                className="size-img-cpass"
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_four}`}
+                                alt=""
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                            <img
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_five}`}
+                                alt=""
+                                className="mx-1 size-img-cpass"
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                            <img
+                                className="size-img-cpass"
+                                src={`${process.env.REACT_APP_API_URL_IMAGE}/${module}/thumb/${item.name_image_six}`}
+                                alt=""
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src = require('../../assets/image/image-coming-soon.png');
+                                }}
+                            />
+                        </div>
                     </td>
 
-                    <td className="text-center">{format(new Date(item.birth_of_date), 'dd/MM/yyyy')}</td>
+                    <td className="text-center">{format(new Date(parseInt(item.birth_of_date)), 'dd/MM/yyyy')}</td>
                     <td>{item.pss}</td>
                     <td>{item.age}</td>
                     <td>{item.pnow}</td>

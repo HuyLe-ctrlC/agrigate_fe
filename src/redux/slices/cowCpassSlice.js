@@ -82,13 +82,13 @@ export const updateDataAction = createAsyncThunk(
         try {
             // call Api
             const response = await cowCpassApi.update(id, data);
-            // console.log(response);
-            if (response.result) {
-                const newData = response.data[0].newData;
+            console.log('response update', response);
+            if (response.data.result) {
+                const newData = response.data.data[0].newData;
                 const results = {
                     id: id,
                     newData: newData,
-                    msg: response.data[0].msg,
+                    msg: response.data.data[0].msg,
                 };
                 return results;
             } else {
@@ -169,8 +169,10 @@ export const sortAction = createAsyncThunk(
 //delete data by id
 export const deleteAction = createAsyncThunk('cowCpass/delete', async (id, { rejectWithValue, getState, dispatch }) => {
     try {
+        console.log(id);
         // call api
         const response = await cowCpassApi.delete(id);
+        console.log('response', response);
         if (response.result) {
             return id;
         } else {
