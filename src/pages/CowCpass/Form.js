@@ -576,7 +576,7 @@ export const Form = (props) => {
                                             key={index}
                                             id="imageProduct"
                                             className="size-thumb-tag img-thumbnail mt-2"
-                                            src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/thumb/${files[index]}`}
+                                            src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/image/${files[index]}`}
                                             alt="preview"
                                             hidden={files == '' ? true : false}
                                             onError={({ currentTarget }) => {
