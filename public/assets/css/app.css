@@ -4193,6 +4193,8 @@ input[type='submit'].btn-block {
     min-height: 1px;
     padding: 1.25rem;
     display: block;
+}
+.scroll-tb {
     overflow-x: auto;
     white-space: nowrap;
 }

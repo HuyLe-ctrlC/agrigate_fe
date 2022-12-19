@@ -364,7 +364,7 @@ export const CowCpass = () => {
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-normal text-primary">{title}</h6>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body scroll-tb">
                         <div className="top_tools d-flex mb-3">
                             <Search
                                 handleSearch={handleSearch}
