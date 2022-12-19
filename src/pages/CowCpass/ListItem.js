@@ -19,16 +19,34 @@ export const ListItem = ({ data, openFormUpdate }) => {
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                dispatch(deleteAction(id));
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Xóa dữ liệu thành công',
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
+                const action = await dispatch(deleteAction(id));
+                if (deleteAction.fulfilled.match(action)) {
+                    const msg = action.payload;
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: msg.msg,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                } else {
+                    const msg = action.payload;
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        width: 500,
+                    });
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: msg,
+                    });
+                }
             } else if (result.isDenied) {
                 Swal.fire('Bạn vẫn chưa xóa!', '', 'info');
             }

@@ -452,7 +452,10 @@ const adminSlices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // add new data into store
-                state.data = [action?.payload?.data].concat(state.data);
+                // state.data = [action?.payload?.data].concat(state.data);
+                const { data } = action?.payload;
+                state.data = state.data?.length > 0 ? state.data : [];
+                state.data = [data, ...state.data];
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

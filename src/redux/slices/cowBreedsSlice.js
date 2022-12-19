@@ -176,7 +176,11 @@ export const deleteAction = createAsyncThunk(
             // call api
             const response = await cowBreedsApi.delete(id);
             if (response.result) {
-                return id;
+                const result = {
+                    id,
+                    msg: response.data[0].msg,
+                };
+                return result;
             } else {
                 return rejectWithValue(response.errors[0].msg);
             }
@@ -247,7 +251,10 @@ const cowBreedsSlices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // add new data into store
-                state.data = [action?.payload?.data].concat(state.data);
+                // state.data = [action?.payload?.data].concat(state.data);
+                const { data } = action?.payload;
+                state.data = state.data?.length > 0 ? state.data : [];
+                state.data = [data, ...state.data];
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;
@@ -290,7 +297,7 @@ const cowBreedsSlices = createSlice({
             .addCase(deleteAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // delete row data in store
-                state.data = state.data.filter((arrow) => arrow.id !== action.payload);
+                state.data = state.data.filter((arrow) => arrow.id !== action.payload.id);
                 state.appError = undefined;
                 state.serverError = undefined;
             })

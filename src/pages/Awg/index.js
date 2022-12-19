@@ -97,6 +97,7 @@ export const Awg = () => {
 
     // create data event
     const handleAddData = async (data) => {
+        setFormStatusState(false);
         const dataJson = JSON.stringify(data);
         // const action = addDataAction(dataJson);
         // dispatch(action);
@@ -133,7 +134,6 @@ export const Awg = () => {
                 title: msg,
             });
         }
-        setFormStatusState(false);
     };
 
     // update data event
