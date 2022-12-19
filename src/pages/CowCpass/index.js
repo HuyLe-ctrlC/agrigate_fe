@@ -7,6 +7,7 @@ import {
     addDataAction,
     getByIdAction,
     updateDataAction,
+    uploadExcel,
 } from '../../redux/slices/cowCpassSlice';
 import { openForm, closeForm, selectForm } from '../../redux/slices/formSlices';
 import { ListItem } from './ListItem';
@@ -22,6 +23,9 @@ import { getAllAction as getAllActionCowGrooups } from '../../redux/slices/cowGr
 import { getAllAction as getAllActionConditions } from '../../redux/slices/conditionSlices';
 import { getAllAction as getAllActionAwgs } from '../../redux/slices/awgSlices';
 import { getAllAction as getAllActionWges } from '../../redux/slices/wgeSlices';
+import BtnFileExcel from '../../components/BtnExport/BtnFileExcel';
+import { format } from 'date-fns';
+import ExportExcel from '../../utils/ExportExcel';
 // import { getAllAction as getAllActionConditions } from "../../redux/slices/conditionSlices";
 // import { getAllAction as getAllActionFarms } from "../../redux/slices/farm";
 
@@ -354,7 +358,57 @@ export const CowCpass = () => {
             return <div className="notify text-danger mb-2">{appError}</div>;
         }
     };
+    // const [statusBtnExcel, setStatusBtnExcel] = useState(false);
+    // const [fileExcel, setFileExcel] = useState('');
+    // const handleChangeInpExcel = (e) => {
+    //     console.log('e.target.files[0]', e.target.files[0]);
+    //     setStatusBtnExcel(true);
+    //     setFileExcel(e.target.files[0]);
+    // };
 
+    // const handleClickImportExcel = () => {
+    //     let formData = new FormData();
+    //     formData.append('excel', fileExcel);
+    //     dispatch(uploadExcel(formData));
+    // };
+
+    const handleExportExcel = async () => {
+        await getData();
+        if (data) {
+            let dataExportNew = [];
+            let dataExport = {};
+            console.log(data);
+            data.forEach((value) => {
+                dataExport = {
+                    card_number: value.card_number,
+                    cPass: value.cPass,
+                    cow_group_ID: value.cow_group_ID,
+                    cow_breed_ID: value.cow_breed_ID,
+                    farm_ID: value.farm_ID,
+                    gender: value.gender,
+                    birth_of_date: format(new Date(value.birth_of_date), 'MM/dd/yyyy'),
+                    pss: value.pss,
+                    age: value.age,
+                    pnow: value.pnow,
+                    conditions_ID: value.conditions_ID,
+                    wge_ID: value.wge_ID,
+                    awg_ID: value.awg_ID,
+                    sort: value.sort,
+                    Created_at: format(
+                        new Date(
+                            value?.updated_at == null || value?.updated_at === 0 ? value.created_at : value.updated_at,
+                        ),
+                        'MM/dd/yyyy',
+                    ),
+                };
+                dataExportNew.push(dataExport);
+            });
+            // console.log('data', data);
+
+            // console.log(dataExportNew);
+            await ExportExcel.exportExcel(dataExportNew, 'Danh sách Admin', 'ListAdmin');
+        }
+    };
     return (
         <>
             <div className="container-fluid">
@@ -365,24 +419,45 @@ export const CowCpass = () => {
                         <h6 className="m-0 font-weight-normal text-primary">{title}</h6>
                     </div>
                     <div className="card-body">
-                        <div className="top_tools d-flex mb-3">
-                            <Search
-                                handleSearch={handleSearch}
-                                dataCowGroups={cowGroup}
-                                dataCowBreeds={cowBreeds}
-                                dataFarm={farm}
-                                dataConditions={conditions}
-                            />
-                            <button onClick={() => handleOpenFormAdd()} className="btn btn-primary btn-icon-split ml-2">
-                                <span className="text">
-                                    <i className="fa-solid fa-plus"></i> Thêm mới
-                                </span>
-                            </button>
-                            <button onClick={() => handleRefreshPage()} className="btn btn-primary btn-icon-split ml-2">
-                                <span className="text">
-                                    <i className="fa-solid fa-rotate"></i>
-                                </span>
-                            </button>
+                        <div className="top_tools d-flex mb-3 justify-content-between">
+                            <div className="top_tools d-flex mb-3">
+                                <Search
+                                    handleSearch={handleSearch}
+                                    dataCowGroups={cowGroup}
+                                    dataCowBreeds={cowBreeds}
+                                    dataFarm={farm}
+                                    dataConditions={conditions}
+                                />
+
+                                {/* {!statusBtnExcel ? (
+                                <input
+                                    type="file"
+                                    title="Chọn file excel"
+                                    className="form-control bg-light w-input-excel ml-2 small"
+                                    onChange={handleChangeInpExcel}
+                                />
+                            ) : (
+                                <BtnFileExcel title="Import Excel" onClick={handleClickImportExcel} />
+                            )} */}
+
+                                <button
+                                    onClick={() => handleOpenFormAdd()}
+                                    className="btn btn-primary btn-icon-split ml-2"
+                                >
+                                    <span className="text">
+                                        <i className="fa-solid fa-plus"></i> Thêm mới
+                                    </span>
+                                </button>
+                                <button
+                                    onClick={() => handleRefreshPage()}
+                                    className="btn btn-primary btn-icon-split ml-2"
+                                >
+                                    <span className="text">
+                                        <i className="fa-solid fa-rotate"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <BtnFileExcel title="Export Excel" onClick={handleExportExcel} />
                         </div>
                         {/* { showToast() } */}
                         <table className="table table-bordered">

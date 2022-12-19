@@ -31,6 +31,10 @@ const cowCpassApi = {
         const url = `/${module}/update-sort/${id}`;
         return axiosClient.put(url, body);
     },
+    importExcel: (data) => {
+        const url = `/${module}/upload-excel`;
+        return axiosUpload.post(url, data);
+    },
 };
 
 export default cowCpassApi;

@@ -94,3 +94,6 @@ tbody tr td span {
     height: 64px;
     object-fit: contain;
 }
+.w-input-excel {
+    max-width: 150px;
+}

@@ -187,6 +187,36 @@ export const deleteAction = createAsyncThunk('cowCpass/delete', async (id, { rej
     }
 });
 
+//upload excel
+export const uploadExcel = createAsyncThunk(
+    'cowCpass/uploadExcel',
+    async (data, { rejectWithValue, getState, dispatch }) => {
+        console.log(data);
+        try {
+            // call Api
+            const response = await cowCpassApi.importExcel(data);
+            console.log('response excel', response);
+            if (response.data.result) {
+                const newData = response.data.data[0].newData;
+                console.log('newData', newData);
+                const results = {
+                    data: newData,
+                    msg: response.data.data[0].msg,
+                };
+                return results;
+            } else {
+                return rejectWithValue(response.data.errors[0].msg);
+            }
+        } catch (error) {
+            // console.log("Failed to fetch data list: ", error);
+            if (!error.response) {
+                throw error;
+            }
+            return rejectWithValue(error?.response?.data);
+        }
+    },
+);
+
 // init
 const cowCpassSlices = createSlice({
     name: 'cowCpass',
@@ -324,6 +354,30 @@ const cowCpassSlices = createSlice({
                 state.serverError = undefined;
             })
             .addCase(sortAction.rejected, (state, action) => {
+                state.appError = action?.payload;
+                state.serverError = action?.error?.message;
+            });
+        //upload file excel
+        builder
+            .addCase(uploadExcel.pending, (state, action) => {
+                // state.loading = true;
+                state.msgSuccess = undefined;
+                state.appError = undefined;
+                state.serverError = undefined;
+            })
+            .addCase(uploadExcel.fulfilled, (state, action) => {
+                // state.loading = false;
+                // add new data into store
+                const { data } = action?.payload;
+                state.data = state.data?.length > 0 ? state.data : [];
+                state.data = [data, ...state.data];
+                state.msgSuccess = action?.payload?.msg;
+                state.appError = undefined;
+                state.serverError = undefined;
+            })
+            .addCase(uploadExcel.rejected, (state, action) => {
+                // state.loading = false;
+                state.msgSuccess = undefined;
                 state.appError = action?.payload;
                 state.serverError = action?.error?.message;
             });

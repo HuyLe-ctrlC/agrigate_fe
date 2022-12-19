@@ -104,6 +104,7 @@ export const Search = (props) => {
                     onChange={(e) => setKeySearch(e.target.value)}
                     value={keySearch}
                 />
+
                 <div className="input-group-append">
                     <button type="button" className="btn btn-primary" onClick={() => handleClickSearch()}>
                         <i className="fas fa-search fa-sm" />
