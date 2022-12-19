@@ -148,6 +148,8 @@ export const sortAction = createAsyncThunk(
             if (response.result) {
                 const results = {
                     msg: response.data[0].msg,
+                    sort: sort,
+                    id: id,
                 };
                 return results;
             } else {
@@ -169,7 +171,11 @@ export const deleteAction = createAsyncThunk('weightP0/delete', async (id, { rej
         // call api
         const response = await weightP0Api.delete(id);
         if (response.result) {
-            return id;
+            const result = {
+                id,
+                msg: response.data[0].msg,
+            };
+            return result;
         } else {
             return rejectWithValue(response.errors[0].msg);
         }
@@ -239,7 +245,10 @@ const weightP0Slices = createSlice({
             .addCase(addDataAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // add new data into store
-                state.data = [action?.payload?.data].concat(state.data);
+                // state.data = [action?.payload?.data].concat(state.data);
+                const { data } = action?.payload;
+                state.data = state.data?.length > 0 ? state.data : [];
+                state.data = [data, ...state.data];
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;
@@ -283,7 +292,7 @@ const weightP0Slices = createSlice({
             .addCase(deleteAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // delete row data in store
-                state.data = state.data.filter((arrow) => arrow.id !== action.payload);
+                state.data = state.data.filter((arrow) => arrow.id !== action.payload.id);
                 state.appError = undefined;
                 state.serverError = undefined;
             })
@@ -312,6 +321,10 @@ const weightP0Slices = createSlice({
         //edit sort
         builder
             .addCase(sortAction.fulfilled, (state, action) => {
+                const checkIndex = state.data.findIndex((row) => row.id.toString() === action?.payload?.id.toString());
+                if (checkIndex >= 0) {
+                    state.data[checkIndex]['sort'] = action?.payload['sort'];
+                }
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

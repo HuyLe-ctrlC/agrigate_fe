@@ -92,7 +92,8 @@ export const updateDataAction = createAsyncThunk(
                 };
                 return results;
             } else {
-                return rejectWithValue(response.errors[0].msg);
+                console.log('response.data.errors[0].msg', response.data.errors[0]);
+                return rejectWithValue(response.data.errors[0]);
             }
         } catch (error) {
             // console.log("Failed to fetch data list: ", error);
@@ -151,6 +152,8 @@ export const sortAction = createAsyncThunk(
             if (response.result) {
                 const results = {
                     msg: response.data[0].msg,
+                    sort: sort,
+                    id: id,
                 };
                 return results;
             } else {
@@ -174,7 +177,11 @@ export const deleteAction = createAsyncThunk('cowCpass/delete', async (id, { rej
         const response = await cowCpassApi.delete(id);
         console.log('response', response);
         if (response.result) {
-            return id;
+            const result = {
+                id,
+                msg: response.data[0].msg,
+            };
+            return result;
         } else {
             return rejectWithValue(response.errors[0].msg);
         }
@@ -319,7 +326,7 @@ const cowCpassSlices = createSlice({
             .addCase(deleteAction.fulfilled, (state, action) => {
                 // state.loading = false;
                 // delete row data in store
-                state.data = state.data.filter((arrow) => arrow.id !== action.payload);
+                state.data = state.data.filter((arrow) => arrow.id !== action.payload.id);
                 state.appError = undefined;
                 state.serverError = undefined;
             })
@@ -349,6 +356,10 @@ const cowCpassSlices = createSlice({
         //edit sort
         builder
             .addCase(sortAction.fulfilled, (state, action) => {
+                const checkIndex = state.data.findIndex((row) => row.id.toString() === action?.payload?.id.toString());
+                if (checkIndex >= 0) {
+                    state.data[checkIndex]['sort'] = action?.payload['sort'];
+                }
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

@@ -16,13 +16,14 @@ const formSchema = Yup.object({
 });
 
 export const Form = (props) => {
+    const dateNow = () => format(new Date(), 'yyyy-MM-dd');
     const [cardNumber, setCardNumber] = useState('');
     const [cPass, setCPass] = useState('');
     const [cowGroupID, setCowGroupID] = useState('');
     const [cowBreedID, setCowBreedID] = useState('');
     const [farmID, setFarmID] = useState('');
     const [gender, setGender] = useState('');
-    const [birthOfDate, setBirthOfDate] = useState('');
+    const [birthOfDate, setBirthOfDate] = useState(dateNow);
     const [pss, setPss] = useState('');
     const [age, setAge] = useState('');
     const [pNow, setPNow] = useState('');
@@ -45,7 +46,6 @@ export const Form = (props) => {
     // console.log(dataUpdate);
     //useRef
     const inputRef = useRef();
-    const inputNameRef = useRef();
 
     useEffect(() => {
         focus();
@@ -231,9 +231,7 @@ export const Form = (props) => {
     const focus = () => {
         inputRef.current?.focus();
     };
-    // console.log('files', files);
-    // console.log('preview', imgData.length);
-    console.log(formik.values.birthOfDate);
+
     return (
         <div className="form-box w-50">
             <div className="form">
@@ -576,7 +574,7 @@ export const Form = (props) => {
                                             key={index}
                                             id="imageProduct"
                                             className="size-thumb-tag img-thumbnail mt-2"
-                                            src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/thumb/${files[index]}`}
+                                            src={`${process.env.REACT_APP_API_URL_IMAGE}/cpass/image/${files[index]}`}
                                             alt="preview"
                                             hidden={files == '' ? true : false}
                                             onError={({ currentTarget }) => {

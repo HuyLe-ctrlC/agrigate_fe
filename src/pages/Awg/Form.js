@@ -93,6 +93,7 @@ const Form = React.forwardRef((props, ref) => {
                     ? formik.values.maxValue.replace(/,/g, '')
                     : formik.values.maxValue,
         };
+        // console.log('data', data);
         addData(data);
     };
     // check show button action
