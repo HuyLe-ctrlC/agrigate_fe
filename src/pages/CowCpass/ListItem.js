@@ -100,6 +100,7 @@ export const ListItem = ({ data, openFormUpdate, deleteByID, handleSortChange })
                             className="text-center border-0 color-sort"
                             id={`sort-${item.id}`}
                             type="number"
+                            min={0}
                             // defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
                             value={item['sort']}
                             onChange={(e) => handleUpdateSort(e, item.id)}

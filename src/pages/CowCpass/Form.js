@@ -12,7 +12,19 @@ import { selectcowCpass } from '../../redux/slices/cowCpassSlice';
 import { format } from 'date-fns';
 const formSchema = Yup.object({
     // name: Yup.string().required('*Dữ liệu bắt buộc!'),
-    // code: Yup.string().required('*Dữ liệu bắt buộc!'),
+    cardNumber: Yup.string().required('*Dữ liệu bắt buộc!'),
+    cPass: Yup.number('*Dữ liệu là số!').required('*Dữ liệu bắt buộc!'),
+    cowGroupID: Yup.string().required('*Dữ liệu bắt buộc!'),
+    cowBreedID: Yup.string().required('*Dữ liệu bắt buộc!'),
+    farmID: Yup.string().required('*Dữ liệu bắt buộc!'),
+    gender: Yup.string().required('*Dữ liệu bắt buộc!'),
+    birthOfDate: Yup.string().required('*Dữ liệu bắt buộc!'),
+    pss: Yup.string().required('*Dữ liệu bắt buộc!'),
+    age: Yup.string().required('*Dữ liệu bắt buộc!'),
+    pNow: Yup.string().required('*Dữ liệu bắt buộc!'),
+    conditionID: Yup.string().required('*Dữ liệu bắt buộc!'),
+    wgeID: Yup.string().required('*Dữ liệu bắt buộc!'),
+    awgID: Yup.string().required('*Dữ liệu bắt buộc!'),
 });
 
 export const Form = (props) => {
@@ -187,7 +199,15 @@ export const Form = (props) => {
                     type="submit"
                     onClick={handleUpdateData}
                     className="btn btn-info btn-cus"
-                    disabled={!formik.isValid}
+                    disabled={
+                        !formik.isValid ||
+                        files[0]?.size > 1800000 ||
+                        files[1]?.size > 1800000 ||
+                        files[2]?.size > 1800000 ||
+                        files[3]?.size > 1800000 ||
+                        files[4]?.size > 1800000 ||
+                        files[5]?.size > 1800000
+                    }
                 >
                     Cập nhật
                 </button>
@@ -198,7 +218,15 @@ export const Form = (props) => {
                     type="submit"
                     onClick={handleAddData}
                     className="btn btn-info btn-cus"
-                    disabled={!formik.isValid}
+                    disabled={
+                        !formik.isValid ||
+                        files[0]?.size > 1800000 ||
+                        files[1]?.size > 1800000 ||
+                        files[2]?.size > 1800000 ||
+                        files[3]?.size > 1800000 ||
+                        files[4]?.size > 1800000 ||
+                        files[5]?.size > 1800000
+                    }
                 >
                     Lưu
                 </button>
@@ -277,7 +305,6 @@ export const Form = (props) => {
                                             setCPass(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('cPass')}
-                                        ref={inputRef}
                                     />
                                     <div className="text-danger fs-6 mt-1">
                                         {formik.touched.cPass && formik.errors.cPass}
@@ -298,7 +325,6 @@ export const Form = (props) => {
                                         setBirthOfDate(e.target.value);
                                     }}
                                     onBlur={formik.handleBlur('birthOfDate')}
-                                    ref={inputRef}
                                 />
                                 <div className="text-danger fs-6 mt-1">
                                     {formik.touched.birthOfDate && formik.errors.birthOfDate}
@@ -309,7 +335,7 @@ export const Form = (props) => {
                                     Cân nặng sơ sinh <span className="text-danger">*</span>
                                 </label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control form-control-user"
                                     name="pss"
                                     value={formik.values.pss}
@@ -318,7 +344,6 @@ export const Form = (props) => {
                                         setPss(e.target.value);
                                     }}
                                     onBlur={formik.handleBlur('pss')}
-                                    ref={inputRef}
                                 />
                                 <div className="text-danger fs-6 mt-1">{formik.touched.pss && formik.errors.pss}</div>
                             </div>
@@ -336,7 +361,6 @@ export const Form = (props) => {
                                         setAge(e.target.value);
                                     }}
                                     onBlur={formik.handleBlur('age')}
-                                    ref={inputRef}
                                 />
                                 <div className="text-danger fs-6 mt-1">{formik.touched.age && formik.errors.age}</div>
                             </div>
@@ -345,7 +369,7 @@ export const Form = (props) => {
                                     Cân nặng hiện tại <span className="text-danger">*</span>
                                 </label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control form-control-user"
                                     name="pNow"
                                     value={formik.values.pNow}
@@ -354,7 +378,6 @@ export const Form = (props) => {
                                         setPNow(e.target.value);
                                     }}
                                     onBlur={formik.handleBlur('pNow')}
-                                    ref={inputRef}
                                 />
                                 <div className="text-danger fs-6 mt-1">{formik.touched.pNow && formik.errors.pNow}</div>
                             </div>
@@ -371,7 +394,6 @@ export const Form = (props) => {
                                             setCowGroupID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('cowGroupID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {cowGroupsData?.data?.map((item, index) => (
@@ -398,7 +420,6 @@ export const Form = (props) => {
                                             setCowBreedID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('cowBreedID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {cowBreedsData?.data?.map((item, index) => (
@@ -425,7 +446,6 @@ export const Form = (props) => {
                                             setFarmID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('farmID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {dataFarm?.map((item, index) => (
@@ -450,7 +470,6 @@ export const Form = (props) => {
                                             setAwgID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('awgID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {awgsData?.data?.map((item, index) => (
@@ -475,7 +494,6 @@ export const Form = (props) => {
                                             setConditionID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('conditionID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {conditionData?.data?.map((item, index) => (
@@ -502,7 +520,6 @@ export const Form = (props) => {
                                             setWgeID(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('wgeID')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {wgesData?.data?.map((item, index) => (
@@ -527,7 +544,6 @@ export const Form = (props) => {
                                             setGender(e.target.value);
                                         }}
                                         onBlur={formik.handleBlur('gender')}
-                                        ref={inputRef}
                                     >
                                         <option value="">-- Chọn --</option>
                                         {genderCow?.map((item, index) => (
@@ -588,13 +604,13 @@ export const Form = (props) => {
                             <div className="text-danger fs-6 mt-1">{formik.touched.image && formik.errors.image}</div>
                             <div className="text-danger fs-6 mt-1">
                                 {files?.length === 0 ? '' : files?.length > 6 ? 'Tối đa là 6 file' : ''}
-                                {files[0]?.size > 2097152 ||
-                                files[1]?.size > 2097152 ||
-                                files[2]?.size > 2097152 ||
-                                files[3]?.size > 2097152 ||
-                                files[4]?.size > 2097152 ||
-                                files[5]?.size > 2097152
-                                    ? '*Hình ảnh phải nhỏ hơn 2MB!'
+                                {files[0]?.size > 1800000 ||
+                                files[1]?.size > 1800000 ||
+                                files[2]?.size > 1800000 ||
+                                files[3]?.size > 1800000 ||
+                                files[4]?.size > 1800000 ||
+                                files[5]?.size > 1800000
+                                    ? '*Hình ảnh phải nhỏ hơn 1.8MB!'
                                     : ''}
                             </div>
                         </div>
