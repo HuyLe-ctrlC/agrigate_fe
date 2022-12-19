@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAwg, getAllAction, addDataAction, getByIdAction, updateDataAction } from '../../redux/slices/awgSlices';
+import {
+    selectAwg,
+    getAllAction,
+    addDataAction,
+    getByIdAction,
+    updateDataAction,
+    deleteAction,
+    statusPublishAction,
+    sortAction,
+} from '../../redux/slices/awgSlices';
 import { openForm, closeForm, selectForm } from '../../redux/slices/formSlices';
 import { ListItem } from './ListItem';
 import Form from './Form';
@@ -223,7 +232,126 @@ export const Awg = () => {
             return <div className="notify text-danger mb-2">{appError}</div>;
         }
     };
+    //handle Delete
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa dữ liệu này không?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const action = await dispatch(deleteAction(id));
+                if (deleteAction.fulfilled.match(action)) {
+                    const msg = action.payload;
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: msg.msg,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                } else {
+                    const msg = action.payload;
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        width: 500,
+                    });
 
+                    Toast.fire({
+                        icon: 'error',
+                        title: msg,
+                    });
+                }
+            } else if (result.isDenied) {
+                Swal.fire('Bạn vẫn chưa xóa!', '', 'info');
+            }
+        });
+    };
+
+    //handle Status
+    const handleStatus = async (e, id) => {
+        const publish = e.target.checked;
+        const resultAction = await dispatch(statusPublishAction({ id, publish }));
+        if (statusPublishAction.fulfilled.match(resultAction)) {
+            const msg = resultAction.payload;
+            // console.log(msg);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: msg.msg,
+            });
+        } else {
+            // console.log(resultAction.payload);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                width: 500,
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Cập nhật dữ liệu thất bại!',
+            });
+        }
+    };
+
+    const handleUpdateSort = async (e, id) => {
+        // console.log(e.target.value);
+        const sort = e.target.value;
+        // console.log(id);
+        if (!!sort) {
+            // setSort(e.target.value);
+            const resultAction = await dispatch(sortAction({ id, sort }));
+            if (sortAction.fulfilled.match(resultAction)) {
+                // const msg = resultAction.payload;
+                // console.log(msg);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    width: 500,
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Cập nhật dữ liệu thành công!',
+                });
+            } else {
+                // console.log(resultAction.payload);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    width: 500,
+                });
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Cập nhật dữ liệu thất bại!',
+                });
+            }
+        }
+    };
     return (
         <>
             <div className="container-fluid">
@@ -275,7 +403,13 @@ export const Awg = () => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    <ListItem data={data} openFormUpdate={(id) => handleOpenFormUpdate(id)} />
+                                    <ListItem
+                                        data={data}
+                                        openFormUpdate={(id) => handleOpenFormUpdate(id)}
+                                        deleteByID={(id) => handleDelete(id)}
+                                        handleStatusChange={(e, id) => handleStatus(e, id)}
+                                        handleSortChange={(e, id) => handleUpdateSort(e, id)}
+                                    />
                                 )}
                             </tbody>
                         </table>

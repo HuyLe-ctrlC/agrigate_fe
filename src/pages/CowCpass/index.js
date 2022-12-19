@@ -7,6 +7,8 @@ import {
     addDataAction,
     getByIdAction,
     updateDataAction,
+    deleteAction,
+    sortAction,
 } from '../../redux/slices/cowCpassSlice';
 import { openForm, closeForm, selectForm } from '../../redux/slices/formSlices';
 import { ListItem } from './ListItem';
@@ -276,8 +278,8 @@ export const CowCpass = () => {
         // console.log(datas);
         const updateAction = await dispatch(updateDataAction(datas));
         if (updateDataAction.fulfilled.match(updateAction)) {
-            // const msg = resultAction.payload;
-            // console.log(msg);
+            const msg = updateAction.payload;
+            console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',
@@ -289,10 +291,11 @@ export const CowCpass = () => {
 
             Toast.fire({
                 icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
+                title: msg.msg,
             });
         } else {
-            // console.log(resultAction.payload);
+            const msg = updateAction.payload.msg;
+            console.log(msg);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'bottom-end',
@@ -304,7 +307,7 @@ export const CowCpass = () => {
 
             Toast.fire({
                 icon: 'error',
-                title: 'Cập nhật dữ liệu thất bại!',
+                title: msg,
             });
         }
     };
@@ -352,6 +355,88 @@ export const CowCpass = () => {
             return <div className="notify text-success mb-2">{msgSuccess}</div>;
         } else {
             return <div className="notify text-danger mb-2">{appError}</div>;
+        }
+    };
+    //handle Delete
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa dữ liệu này không?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const action = await dispatch(deleteAction(id));
+                if (deleteAction.fulfilled.match(action)) {
+                    const msg = action.payload;
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: msg.msg,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                } else {
+                    const msg = action.payload;
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        width: 500,
+                    });
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: msg,
+                    });
+                }
+            } else if (result.isDenied) {
+                Swal.fire('Bạn vẫn chưa xóa!', '', 'info');
+            }
+        });
+    };
+
+    const handleUpdateSort = async (e, id) => {
+        // console.log(e.target.value);
+        const sort = e.target.value;
+        // console.log(id);
+        if (!!sort) {
+            // setSort(e.target.value);
+            const resultAction = await dispatch(sortAction({ id, sort }));
+            if (sortAction.fulfilled.match(resultAction)) {
+                // const msg = resultAction.payload;
+                // console.log(msg);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    width: 500,
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Cập nhật dữ liệu thành công!',
+                });
+            } else {
+                // console.log(resultAction.payload);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    width: 500,
+                });
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Cập nhật dữ liệu thất bại!',
+                });
+            }
         }
     };
 
@@ -422,7 +507,12 @@ export const CowCpass = () => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    <ListItem data={data} openFormUpdate={(id) => handleOpenFormUpdate(id)} />
+                                    <ListItem
+                                        data={data}
+                                        openFormUpdate={(id) => handleOpenFormUpdate(id)}
+                                        deleteByID={(id) => handleDelete(id)}
+                                        handleSortChange={(e, id) => handleUpdateSort(e, id)}
+                                    />
                                 )}
                             </tbody>
                         </table>

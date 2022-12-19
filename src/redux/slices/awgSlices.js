@@ -142,6 +142,8 @@ export const sortAction = createAsyncThunk('awg/sort', async (dataUpdate, { reje
         if (response.result) {
             const results = {
                 msg: response.data[0].msg,
+                sort: sort,
+                id: id,
             };
             return results;
         } else {
@@ -311,6 +313,10 @@ const awgSlices = createSlice({
         //edit sort
         builder
             .addCase(sortAction.fulfilled, (state, action) => {
+                const checkIndex = state.data.findIndex((row) => row.id.toString() === action?.payload?.id.toString());
+                if (checkIndex >= 0) {
+                    state.data[checkIndex]['sort'] = action?.payload['sort'];
+                }
                 state.msgSuccess = action?.payload?.msg;
                 state.appError = undefined;
                 state.serverError = undefined;

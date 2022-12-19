@@ -1,137 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import Swal from 'sweetalert2';
-import { deleteAction, statusPublishAction } from '../../redux/slices/cowGroupsSlice';
+import React from 'react';
 import { format } from 'date-fns';
-import { sortAction } from '../../redux/slices/cowGroupsSlice';
 
-export const ListItem = ({ data, openFormUpdate }) => {
-    // const [checked, setChecked] = useState();
-    const dispatch = useDispatch();
-
+export const ListItem = ({ data, openFormUpdate, deleteByID, handleStatusChange, handleSortChange }) => {
     const handleOpenFormUpdate = (id) => {
         openFormUpdate(id);
     };
-    // delete data event
+
     const handleDelete = (id) => {
-        Swal.fire({
-            title: 'Bạn có chắc muốn xóa dữ liệu này không?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const action = await dispatch(deleteAction(id));
-                if (deleteAction.fulfilled.match(action)) {
-                    const msg = action.payload;
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: msg.msg,
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                } else {
-                    const msg = action.payload;
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'bottom-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        width: 500,
-                    });
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: msg,
-                    });
-                }
-            } else if (result.isDenied) {
-                Swal.fire('Bạn vẫn chưa xóa!', '', 'info');
-            }
-        });
+        deleteByID(id);
     };
 
-    const handleStatus = async (e, id) => {
-        const publish = e.target.checked;
-        const resultAction = await dispatch(statusPublishAction({ id, publish }));
-        if (statusPublishAction.fulfilled.match(resultAction)) {
-            // const msg = resultAction.payload;
-            // console.log(msg);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'bottom-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                width: 500,
-            });
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Cập nhật dữ liệu thành công!',
-            });
-        } else {
-            // console.log(resultAction.payload);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'bottom-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                width: 500,
-            });
-
-            Toast.fire({
-                icon: 'error',
-                title: 'Cập nhật dữ liệu thất bại!',
-            });
-        }
+    const handleStatus = (e, id) => {
+        handleStatusChange(e, id);
     };
 
-    //handle update sort
-    const [sort, setSort] = useState('');
-    const handleUpdateSort = async (e, id) => {
-        // console.log(e.target.value);
-        const sort = e.target.value;
-        // console.log(id);
-        if (!!sort) {
-            setSort(e.target.value);
-            const resultAction = await dispatch(sortAction({ id, sort }));
-            if (sortAction.fulfilled.match(resultAction)) {
-                // const msg = resultAction.payload;
-                // console.log(msg);
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    width: 500,
-                });
-
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Cập nhật dữ liệu thành công!',
-                });
-            } else {
-                // console.log(resultAction.payload);
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    width: 500,
-                });
-
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Cập nhật dữ liệu thất bại!',
-                });
-            }
-        }
+    const handleUpdateSort = (e, id) => {
+        handleSortChange(e, id);
     };
 
     return (
@@ -144,8 +28,9 @@ export const ListItem = ({ data, openFormUpdate }) => {
                         <input
                             className="text-center border-0 color-sort"
                             id={`sort-${item.id}`}
-                            type="text"
-                            defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
+                            type="number"
+                            // defaultValue={item.sort || item.sort === 0 ? item.sort : sort}
+                            value={item['sort']}
                             onChange={(e) => handleUpdateSort(e, item.id)}
                         />
                     </td>
