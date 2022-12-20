@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const Paging = (props) => {
     const { totalPage, currentPage, onchangePage, onPrevClickPage, onNextClickPage } = props;
@@ -7,29 +7,34 @@ export const Paging = (props) => {
     // change page
     const handleChangePage = (page) => {
         onchangePage(page);
-    }
+    };
 
-    const handlePrevClick = ()=>{
+    const handlePrevClick = () => {
         onPrevClickPage();
-    }
-    const handleNextClick = ()=>{
+    };
+    const handleNextClick = () => {
         onNextClickPage();
-    }
-  
+    };
+
     // init number page array
     const pageNumbers = [];
+
     for (let i = 1; i <= totalPage; i++) {
-      pageNumbers.push(i);
+        pageNumbers.push(i);
     }
 
     //render paging
-    const renderPageNumbers = pageNumbers.map(number => {
+    const renderPageNumbers = pageNumbers.map((number) => {
         let classActive = '';
-        if(currentPage === number){
+        if (currentPage === number) {
             classActive = 'active';
         }
         return (
-            <li className={'page-item ' + classActive + ''} key={number} ><button id={number} type="button" className="page-link" onClick={() => handleChangePage(number)}>{number}</button></li>
+            <li className={'page-item ' + classActive + ''} key={number}>
+                <button id={number} type="button" className="page-link" onClick={() => handleChangePage(number)}>
+                    {number}
+                </button>
+            </li>
         );
     });
 
@@ -44,7 +49,7 @@ export const Paging = (props) => {
                                 Previous
                             </button>
                         </li>
-                        { renderPageNumbers }
+                        {renderPageNumbers}
                         <li className="page-item">
                             <button className="page-link" onClick={() => handleNextClick()}>
                                 Next

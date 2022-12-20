@@ -48,13 +48,11 @@ function App() {
                             <Route path={ROUTES.WGS} element={<Wgs />} />
                             <Route path={ROUTES.CONFIG} element={<Config />} />
                             <Route path={ROUTES.COWCPASS} element={<CowCpass />} />
-
                             {/* account & role */}
                             <Route path={ROUTES.AWG} element={<Awg />} />
                             {/* <Route path={ROUTES.ROLE} element={<Role />} /> */}
                         </Route>
                     </Route>
-
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
