@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 
 export const ListItem = ({ data, openFormUpdate, deleteByID, handleSortChange }) => {
@@ -14,7 +14,6 @@ export const ListItem = ({ data, openFormUpdate, deleteByID, handleSortChange })
     const handleUpdateSort = (e, id) => {
         handleSortChange(e, id);
     };
-
     return (
         <>
             {data?.map((item) => (
@@ -92,9 +91,9 @@ export const ListItem = ({ data, openFormUpdate, deleteByID, handleSortChange })
                     <td>{item.pss}</td>
                     <td>{item.age}</td>
                     <td>{item.pnow}</td>
-                    <td>{item.name_conditions}</td>
-                    <td>{item.name_wges}</td>
-                    <td>{item.name_awgs}</td>
+                    <td style={{ color: item.color_text }}>{item.name_conditions}</td>
+                    <td style={{ color: item.color_text_wges }}>{item.name_wges}</td>
+                    <td style={{ color: item.color_text_awgs }}>{item.name_awgs}</td>
                     <td>
                         <input
                             className="text-center border-0 color-sort"

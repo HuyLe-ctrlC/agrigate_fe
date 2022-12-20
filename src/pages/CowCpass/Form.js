@@ -233,7 +233,6 @@ export const Form = (props) => {
             );
         }
     };
-
     //formik
     const formik = useFormik({
         enableReinitialize: true,
@@ -256,6 +255,7 @@ export const Form = (props) => {
         validationSchema: formSchema,
     });
 
+    console.log(!formik.isValid);
     const focus = () => {
         inputRef.current?.focus();
     };
@@ -459,7 +459,7 @@ export const Form = (props) => {
                             </div>
                             <div className="form-group width-cpass-cow mx-3">
                                 <label>
-                                    Cân nặng trung bình <span className="text-danger">*</span>
+                                    Tăng trọng trung bình <span className="text-danger">*</span>
                                 </label>
                                 <div>
                                     <select

@@ -23,17 +23,19 @@ const Form = React.forwardRef((props, ref) => {
     const [minValue, setMinValue] = useState('');
     const [maxValue, setMaxValue] = useState('');
     const [publish, setPublish] = useState(true);
+    const [colorText, setColorText] = useState('');
+    const [colorBackground, setcolorBackground] = useState('');
     // get props to index components
     const { closeForm, isUpdate, addData, updateDate } = props;
     // get data update to redux
     const awgData = useSelector(selectAwg);
     const { dataUpdate } = awgData;
-    // console.log(dataUpdate);
     //useRef
     const inputRef = useRef();
     useEffect(() => {
         focus();
         if (isUpdate) {
+            console.log(dataUpdate);
             if (dataUpdate) {
                 if (dataUpdate?.name !== undefined) {
                     setName(dataUpdate?.name);
@@ -49,6 +51,13 @@ const Form = React.forwardRef((props, ref) => {
                 }
                 if (dataUpdate?.max_value !== undefined) {
                     setMaxValue(dataUpdate?.max_value);
+                }
+                if (dataUpdate?.color_text !== undefined) {
+                    console.log(dataUpdate?.color_text);
+                    setColorText(dataUpdate?.color_text);
+                }
+                if (dataUpdate?.color_bg !== undefined) {
+                    setcolorBackground(dataUpdate?.color_bg);
                 }
             }
         }
@@ -73,6 +82,8 @@ const Form = React.forwardRef((props, ref) => {
                 typeof formik.values.maxValue == 'string'
                     ? formik.values.maxValue.replace(/,/g, '')
                     : formik.values.maxValue,
+            color_text: formik.values.colorText,
+            color_bg: formik.values.colorBackground,
         };
         // console.log(dataUpdateNew);
         updateDate(id, dataUpdateNew);
@@ -92,6 +103,8 @@ const Form = React.forwardRef((props, ref) => {
                 typeof formik.values.maxValue == 'string'
                     ? formik.values.maxValue.replace(/,/g, '')
                     : formik.values.maxValue,
+            color_text: formik.values.colorText,
+            color_bg: formik.values.colorBackground,
         };
         // console.log('data', data);
         addData(data);
@@ -131,6 +144,8 @@ const Form = React.forwardRef((props, ref) => {
             code: code,
             minValue: minValue,
             maxValue: maxValue,
+            colorText: colorText,
+            colorBackground: colorBackground,
         },
         validationSchema: formSchema,
     });
@@ -205,6 +220,40 @@ const Form = React.forwardRef((props, ref) => {
                             />
                             <div className="text-danger fs-6 mt-1">
                                 {formik.touched.maxValue && formik.errors.maxValue}
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-6">
+                                <div className="d-flex flex-column">
+                                    <label>Màu chữ</label>
+                                    <input
+                                        type="color"
+                                        name="name"
+                                        className="w-100"
+                                        value={formik.values.colorText}
+                                        onChange={formik.handleChange('colorText')}
+                                        onBlur={formik.handleBlur('colorText')}
+                                    />
+                                </div>
+                                <div className="text-danger fs-6 mt-1">
+                                    {formik.touched.colorText && formik.errors.colorText}
+                                </div>
+                            </div>
+                            <div className="form-group col-6">
+                                <div className="d-flex flex-column">
+                                    <label>Màu nền</label>
+                                    <input
+                                        type="color"
+                                        name="name"
+                                        className="w-100"
+                                        value={formik.values.colorBackground}
+                                        onChange={formik.handleChange('colorBackground')}
+                                        onBlur={formik.handleBlur('colorBackground')}
+                                    />
+                                </div>
+                                <div className="text-danger fs-6 mt-1">
+                                    {formik.touched.colorBackground && formik.errors.colorBackground}
+                                </div>
                             </div>
                         </div>
                         <div className="form-group">

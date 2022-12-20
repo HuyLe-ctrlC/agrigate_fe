@@ -382,9 +382,11 @@ export const Awg = () => {
                                     <th className="text-center">Mã</th>
                                     <th className="text-center">Tên</th>
                                     <th className="text-center">Thứ tự</th>
-                                    <th className="text-center">Ngày tạo</th>
                                     <th className="text-center">Giá trị nhỏ nhất</th>
                                     <th className="text-center">Giá trị lớn nhất</th>
+                                    <th className="text-center">Màu chữ</th>
+                                    <th className="text-center">Màu nền</th>
+                                    <th className="text-center">Ngày tạo</th>
                                     <th className="text-center">Hiển thị</th>
                                     <th className="text-center">Hành động</th>
                                 </tr>

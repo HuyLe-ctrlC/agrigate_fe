@@ -71,7 +71,7 @@ export const CowCpass = () => {
     };
     const getDataFarm = async () => {
         try {
-            const res = await axiosClient({ method: 'GET', url: PATH.farms });
+            const res = await axiosClient({ method: 'GET', url: PATH.farms, params: { orderBy: 'desc' } });
             console.log(res);
             setFarm(res.data);
         } catch (error) {
@@ -93,7 +93,7 @@ export const CowCpass = () => {
     };
     const getDataCowGroup = async () => {
         try {
-            const res = await axiosClient({ method: 'GET', url: PATH.cowGroups });
+            const res = await axiosClient({ method: 'GET', url: PATH.cowGroups, params: { orderBy: 'desc' } });
             console.log(res);
             setCowGroup(res.data);
         } catch (error) {
@@ -115,7 +115,7 @@ export const CowCpass = () => {
     };
     const getDataCowBreeds = async () => {
         try {
-            const res = await axiosClient({ method: 'GET', url: PATH.cowBreeds });
+            const res = await axiosClient({ method: 'GET', url: PATH.cowBreeds, params: { orderBy: 'desc' } });
             console.log(res);
             setCowBreeds(res.data);
         } catch (error) {

@@ -5,8 +5,8 @@ export const publishType = [
 ];
 
 export const genderCow = [
-    { value: 0, label: constantStatus.FEMALE },
     { value: 1, label: constantStatus.MALE },
+    { value: 0, label: constantStatus.FEMALE },
 ];
 
 // export const status = [

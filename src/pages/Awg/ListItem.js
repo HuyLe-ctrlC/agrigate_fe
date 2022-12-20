@@ -36,6 +36,15 @@ export const ListItem = ({ data, openFormUpdate, deleteByID, handleStatusChange,
                             />
                         </div>
                     </td>
+
+                    <td>{new Intl.NumberFormat('de-DE').format(item.min_value)}</td>
+                    <td>{new Intl.NumberFormat('de-DE').format(item.max_value)}</td>
+                    <td>
+                        <input type="color" id="color" name="color" value={item.color_text} readOnly />
+                    </td>
+                    <td>
+                        <input type="color" id="color" name="color" value={item.color_bg} readOnly />
+                    </td>
                     <td className="text-center">
                         {format(
                             new Date(
@@ -44,8 +53,6 @@ export const ListItem = ({ data, openFormUpdate, deleteByID, handleStatusChange,
                             'dd/MM/yyyy',
                         )}
                     </td>
-                    <td>{new Intl.NumberFormat('de-DE').format(item.min_value)}</td>
-                    <td>{new Intl.NumberFormat('de-DE').format(item.max_value)}</td>
                     {/* <td>{item.min_value}</td>
                     <td>{item.max_value}</td> */}
                     <td className="text-center">
